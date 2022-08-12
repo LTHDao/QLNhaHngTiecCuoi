@@ -1,0 +1,3 @@
+com.btl.configs.TilesConfig=org.springframework.stereotype.Component
+com.btl.configs.WebAppContextConfig=org.springframework.stereotype.Component
+com.btl.controllers.IndexController=org.springframework.stereotype.Component
