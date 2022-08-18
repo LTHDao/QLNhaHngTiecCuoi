@@ -1,5 +1,0 @@
-com\btl\configs\DispatcherServletInit.class
-com\btl\configs\WebAppContextConfig.class
-META-INF\spring.components
-com\btl\configs\TilesConfig.class
-com\btl\controllers\IndexController.class

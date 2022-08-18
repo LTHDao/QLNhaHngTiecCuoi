@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.nhtc_QLTiecCuoi_war_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.nhtc.pojo.Sanhcuoi</class>
+    <class>com.nhtc.pojo.Phieudatmon</class>
+    <class>com.nhtc.pojo.Userrole</class>
+    <class>com.nhtc.pojo.Nhanvien</class>
+    <class>com.nhtc.pojo.Catochuc</class>
+    <class>com.nhtc.pojo.Dondattiec</class>
+    <class>com.nhtc.pojo.Loaimon</class>
+    <class>com.nhtc.pojo.Phieudatdichvu</class>
+    <class>com.nhtc.pojo.Loaidichvu</class>
+    <class>com.nhtc.pojo.Loaisanh</class>
+    <class>com.nhtc.pojo.Dichvu</class>
+    <class>com.nhtc.pojo.Hoadon</class>
+    <class>com.nhtc.pojo.Khachhang</class>
+    <class>com.nhtc.pojo.User</class>
+    <class>com.nhtc.pojo.Monan</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/nhahangtieccuoi?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="123456789"/>
+    </properties>
+  </persistence-unit>
+</persistence>
