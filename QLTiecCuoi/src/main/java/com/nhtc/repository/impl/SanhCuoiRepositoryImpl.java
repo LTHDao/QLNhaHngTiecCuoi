@@ -4,8 +4,8 @@
  */
 package com.nhtc.repository.impl;
 
-import com.nhtc.pojo.Loaisanh;
-import com.nhtc.repository.LoaiSanhRepository;
+import com.nhtc.pojo.Sanhcuoi;
+import com.nhtc.repository.SanhCuoiRepository;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -20,16 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class LoaiSanhRepositoryImpl implements LoaiSanhRepository {
+public class SanhCuoiRepositoryImpl implements SanhCuoiRepository{
     @Autowired
-    private LocalSessionFactoryBean sessionFactory;
-
+    LocalSessionFactoryBean sessionFactory;
+    
     @Override
-    public List<Loaisanh> getLoaiSanh() {
-        Session s = this.sessionFactory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Loaisanh");
+    public List<Sanhcuoi> getSanhCuoi() {
+        Session s = sessionFactory.getObject().getCurrentSession();
+        Query q = s.createQuery("From Sanhcuoi");
         
         return q.getResultList();
     }
-    
 }

@@ -5,9 +5,7 @@
 package com.nhtc.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,12 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,7 +29,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Monan.findAll", query = "SELECT m FROM Monan m"),
     @NamedQuery(name = "Monan.findById", query = "SELECT m FROM Monan m WHERE m.id = :id"),
     @NamedQuery(name = "Monan.findByTen", query = "SELECT m FROM Monan m WHERE m.ten = :ten"),
-    @NamedQuery(name = "Monan.findByGia", query = "SELECT m FROM Monan m WHERE m.gia = :gia")})
+    @NamedQuery(name = "Monan.findByGia", query = "SELECT m FROM Monan m WHERE m.gia = :gia"),
+    @NamedQuery(name = "Monan.findByMoTa", query = "SELECT m FROM Monan m WHERE m.moTa = :moTa"),
+    @NamedQuery(name = "Monan.findByHinhAnh", query = "SELECT m FROM Monan m WHERE m.hinhAnh = :hinhAnh")})
 public class Monan implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,8 +49,12 @@ public class Monan implements Serializable {
     @NotNull
     @Column(name = "gia")
     private float gia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMonAn")
-    private Set<Phieudatmon> phieudatmonSet;
+    @Size(max = 300)
+    @Column(name = "moTa")
+    private String moTa;
+    @Size(max = 150)
+    @Column(name = "hinhAnh")
+    private String hinhAnh;
     @JoinColumn(name = "idThucDon", referencedColumnName = "idThucDon")
     @ManyToOne(optional = false)
     private Loaimon idThucDon;
@@ -94,13 +96,20 @@ public class Monan implements Serializable {
         this.gia = gia;
     }
 
-    @XmlTransient
-    public Set<Phieudatmon> getPhieudatmonSet() {
-        return phieudatmonSet;
+    public String getMoTa() {
+        return moTa;
     }
 
-    public void setPhieudatmonSet(Set<Phieudatmon> phieudatmonSet) {
-        this.phieudatmonSet = phieudatmonSet;
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
+    }
+
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
     }
 
     public Loaimon getIdThucDon() {

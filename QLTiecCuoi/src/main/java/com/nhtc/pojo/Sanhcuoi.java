@@ -11,8 +11,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,7 +33,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sanhcuoi.findByTenSanh", query = "SELECT s FROM Sanhcuoi s WHERE s.tenSanh = :tenSanh"),
     @NamedQuery(name = "Sanhcuoi.findByGiaToiThieu", query = "SELECT s FROM Sanhcuoi s WHERE s.giaToiThieu = :giaToiThieu"),
     @NamedQuery(name = "Sanhcuoi.findByMoTa", query = "SELECT s FROM Sanhcuoi s WHERE s.moTa = :moTa"),
-    @NamedQuery(name = "Sanhcuoi.findByT\u00ecnhTrangSanh", query = "SELECT s FROM Sanhcuoi s WHERE s.t\u00ecnhTrangSanh = :t\u00ecnhTrangSanh")})
+    @NamedQuery(name = "Sanhcuoi.findByDienTich", query = "SELECT s FROM Sanhcuoi s WHERE s.dienTich = :dienTich"),
+    @NamedQuery(name = "Sanhcuoi.findBySoLuongBan", query = "SELECT s FROM Sanhcuoi s WHERE s.soLuongBan = :soLuongBan"),
+    @NamedQuery(name = "Sanhcuoi.findByHinhAnh", query = "SELECT s FROM Sanhcuoi s WHERE s.hinhAnh = :hinhAnh")})
 public class Sanhcuoi implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,19 +55,24 @@ public class Sanhcuoi implements Serializable {
     private float giaToiThieu;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 500)
     @Column(name = "moTa")
     private String moTa;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "t\u00ecnhTrangSanh")
-    private String tìnhTrangSanh;
+    @Column(name = "dienTich")
+    private double dienTich;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "soLuongBan")
+    private int soLuongBan;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "hinhAnh")
+    private String hinhAnh;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSanh")
     private Set<Dondattiec> dondattiecSet;
-    @JoinColumn(name = "loaiSanhID", referencedColumnName = "idloai_sanh")
-    @ManyToOne(optional = false)
-    private Loaisanh loaiSanhID;
 
     public Sanhcuoi() {
     }
@@ -76,12 +81,14 @@ public class Sanhcuoi implements Serializable {
         this.idSanhCuoi = idSanhCuoi;
     }
 
-    public Sanhcuoi(Integer idSanhCuoi, String tenSanh, float giaToiThieu, String moTa, String tìnhTrangSanh) {
+    public Sanhcuoi(Integer idSanhCuoi, String tenSanh, float giaToiThieu, String moTa, double dienTich, int soLuongBan, String hinhAnh) {
         this.idSanhCuoi = idSanhCuoi;
         this.tenSanh = tenSanh;
         this.giaToiThieu = giaToiThieu;
         this.moTa = moTa;
-        this.tìnhTrangSanh = tìnhTrangSanh;
+        this.dienTich = dienTich;
+        this.soLuongBan = soLuongBan;
+        this.hinhAnh = hinhAnh;
     }
 
     public Integer getIdSanhCuoi() {
@@ -116,12 +123,28 @@ public class Sanhcuoi implements Serializable {
         this.moTa = moTa;
     }
 
-    public String getTìnhTrangSanh() {
-        return tìnhTrangSanh;
+    public double getDienTich() {
+        return dienTich;
     }
 
-    public void setTìnhTrangSanh(String tìnhTrangSanh) {
-        this.tìnhTrangSanh = tìnhTrangSanh;
+    public void setDienTich(double dienTich) {
+        this.dienTich = dienTich;
+    }
+
+    public int getSoLuongBan() {
+        return soLuongBan;
+    }
+
+    public void setSoLuongBan(int soLuongBan) {
+        this.soLuongBan = soLuongBan;
+    }
+
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
     }
 
     @XmlTransient
@@ -131,14 +154,6 @@ public class Sanhcuoi implements Serializable {
 
     public void setDondattiecSet(Set<Dondattiec> dondattiecSet) {
         this.dondattiecSet = dondattiecSet;
-    }
-
-    public Loaisanh getLoaiSanhID() {
-        return loaiSanhID;
-    }
-
-    public void setLoaiSanhID(Loaisanh loaiSanhID) {
-        this.loaiSanhID = loaiSanhID;
     }
 
     @Override

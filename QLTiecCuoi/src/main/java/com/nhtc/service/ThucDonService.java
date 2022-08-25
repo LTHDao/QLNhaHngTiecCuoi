@@ -4,13 +4,17 @@
  */
 package com.nhtc.service;
 
-import com.nhtc.pojo.Loaisanh;
+import com.nhtc.pojo.Loaimon;
+import com.nhtc.pojo.Monan;
 import java.util.List;
 
 /**
  *
  * @author hdao2
  */
-public interface LoaiSanhService {
-    List<Loaisanh> getLoaiSanh();
+public interface ThucDonService {
+    List<Loaimon> getLoaiMon();
+    Loaimon getLoaiMonByID(int loaiMonId);
+    List<Monan> getMonAn(String params, int page);
+    long countMonAn(String params);
 }

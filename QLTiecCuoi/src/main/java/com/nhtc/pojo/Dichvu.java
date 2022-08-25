@@ -5,9 +5,7 @@
 package com.nhtc.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,12 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,7 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Dichvu.findByIdDichVu", query = "SELECT d FROM Dichvu d WHERE d.idDichVu = :idDichVu"),
     @NamedQuery(name = "Dichvu.findByTenDichVu", query = "SELECT d FROM Dichvu d WHERE d.tenDichVu = :tenDichVu"),
     @NamedQuery(name = "Dichvu.findByChiTiet", query = "SELECT d FROM Dichvu d WHERE d.chiTiet = :chiTiet"),
-    @NamedQuery(name = "Dichvu.findByGiaDichVu", query = "SELECT d FROM Dichvu d WHERE d.giaDichVu = :giaDichVu")})
+    @NamedQuery(name = "Dichvu.findByGiaDichVu", query = "SELECT d FROM Dichvu d WHERE d.giaDichVu = :giaDichVu"),
+    @NamedQuery(name = "Dichvu.findByHinhAnh", query = "SELECT d FROM Dichvu d WHERE d.hinhAnh = :hinhAnh")})
 public class Dichvu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,18 +45,19 @@ public class Dichvu implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tenDichVu")
     private String tenDichVu;
-    @Size(max = 45)
+    @Size(max = 200)
     @Column(name = "chiTiet")
     private String chiTiet;
     @Basic(optional = false)
     @NotNull
     @Column(name = "giaDichVu")
     private float giaDichVu;
+    @Size(max = 150)
+    @Column(name = "hinhAnh")
+    private String hinhAnh;
     @JoinColumn(name = "loaiDichVu", referencedColumnName = "idloaidichvu")
     @ManyToOne(optional = false)
     private Loaidichvu loaiDichVu;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDichVu")
-    private Set<Phieudatdichvu> phieudatdichvuSet;
 
     public Dichvu() {
     }
@@ -106,21 +104,20 @@ public class Dichvu implements Serializable {
         this.giaDichVu = giaDichVu;
     }
 
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
+    }
+
     public Loaidichvu getLoaiDichVu() {
         return loaiDichVu;
     }
 
     public void setLoaiDichVu(Loaidichvu loaiDichVu) {
         this.loaiDichVu = loaiDichVu;
-    }
-
-    @XmlTransient
-    public Set<Phieudatdichvu> getPhieudatdichvuSet() {
-        return phieudatdichvuSet;
-    }
-
-    public void setPhieudatdichvuSet(Set<Phieudatdichvu> phieudatdichvuSet) {
-        this.phieudatdichvuSet = phieudatdichvuSet;
     }
 
     @Override

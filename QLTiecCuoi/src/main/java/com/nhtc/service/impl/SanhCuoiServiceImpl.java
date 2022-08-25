@@ -4,9 +4,9 @@
  */
 package com.nhtc.service.impl;
 
-import com.nhtc.pojo.Loaisanh;
-import com.nhtc.repository.LoaiSanhRepository;
-import com.nhtc.service.LoaiSanhService;
+import com.nhtc.pojo.Sanhcuoi;
+import com.nhtc.repository.SanhCuoiRepository;
+import com.nhtc.service.SanhCuoiService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
  * @author hdao2
  */
 @Service
-public class LoaiSanhServiceImpl implements LoaiSanhService {
+public class SanhCuoiServiceImpl implements SanhCuoiService{
     @Autowired
-    private LoaiSanhRepository loaiSanhRepository;
+    private SanhCuoiRepository sanhCuoiRepository;
 
     @Override
-    public List<Loaisanh> getLoaiSanh() {
-        return this.loaiSanhRepository.getLoaiSanh();
+    public List<Sanhcuoi> getSanhCuoi() {
+        return this.sanhCuoiRepository.getSanhCuoi();
     }
 }

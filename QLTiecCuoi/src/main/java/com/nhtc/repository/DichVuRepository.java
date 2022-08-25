@@ -4,14 +4,17 @@
  */
 package com.nhtc.repository;
 
-import com.nhtc.pojo.Loaisanh;
-import com.nhtc.pojo.Loaisanh;
+import com.nhtc.pojo.Dichvu;
+import com.nhtc.pojo.Loaidichvu;
 import java.util.List;
 
 /**
  *
  * @author hdao2
  */
-public interface LoaiSanhRepository {
-    List<Loaisanh> getLoaiSanh();
+public interface DichVuRepository {
+    List<Loaidichvu> getLoaiDichVu();
+    Loaidichvu getLoaiDichVuByID(int loaiDichVuID);
+    List<Dichvu> getDichVu(String params, int page);
+    long countDichVu(String params);
 }
