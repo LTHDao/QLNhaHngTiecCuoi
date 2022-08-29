@@ -16,13 +16,16 @@ import com.nhtc.service.SanhCuoiService;
 import com.nhtc.service.ThucDonService;
 import java.util.Map;
 import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 /**
  *
  * @author hdao2
  */
 @Controller
+@ControllerAdvice
 public class IndexController {
     @Autowired
     private SanhCuoiService sanhCuoiService;
@@ -32,7 +35,13 @@ public class IndexController {
     private DichVuService dichVuService;
     @Autowired
     private Environment env;
+    
 
+    @ModelAttribute
+    public void commAttr(Model model) {
+        model.addAttribute("loaidichvu", this.dichVuService.getLoaiDichVu());
+    }
+    
     @RequestMapping("/")
     public String index(Model model,
             @RequestParam(value = "kw", defaultValue = "") String kw) {

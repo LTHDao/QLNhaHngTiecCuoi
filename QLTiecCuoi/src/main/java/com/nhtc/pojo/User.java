@@ -5,24 +5,27 @@
 package com.nhtc.pojo;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author hdao2
+ * @author Minh
  */
 @Entity
 @Table(name = "user")
@@ -35,13 +38,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
     @NamedQuery(name = "User.findBySdt", query = "SELECT u FROM User u WHERE u.sdt = :sdt"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar")})
+    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar"),
+    @NamedQuery(name = "User.findByUserRole", query = "SELECT u FROM User u WHERE u.userRole = :userRole")})
 public class User implements Serializable {
+    
+    public static final String ADMIN = "ROLE_ADMIN";
+    public static final String USER = "ROLE_USER";
+    public static final String EMPLOYEE = "ROLE_EMPLOYEE";
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -56,7 +64,7 @@ public class User implements Serializable {
     private String username;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 8)
+    @Size(min = 1, max = 100)
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
@@ -68,16 +76,17 @@ public class User implements Serializable {
     @Size(max = 100)
     @Column(name = "email")
     private String email;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "avatar")
     private String avatar;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userID")
-    private Nhanvien nhanvien;
-    @JoinColumn(name = "userRole", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Userrole userRole;
+    @Size(max = 10)
+    @Column(name = "userRole")
+    private String userRole;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
+    private Set<Nhanvien> nhanvienSet;
+    
+    @Transient
+    private String confirmPassword;
 
     public User() {
     }
@@ -86,13 +95,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String hoTen, String username, String password, String sdt, String avatar) {
+    public User(Integer id, String hoTen, String username, String password, String sdt) {
         this.id = id;
         this.hoTen = hoTen;
         this.username = username;
         this.password = password;
         this.sdt = sdt;
-        this.avatar = avatar;
     }
 
     public Integer getId() {
@@ -151,20 +159,21 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    public Nhanvien getNhanvien() {
-        return nhanvien;
-    }
-
-    public void setNhanvien(Nhanvien nhanvien) {
-        this.nhanvien = nhanvien;
-    }
-
-    public Userrole getUserRole() {
+    public String getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(Userrole userRole) {
+    public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    @XmlTransient
+    public Set<Nhanvien> getNhanvienSet() {
+        return nhanvienSet;
+    }
+
+    public void setNhanvienSet(Set<Nhanvien> nhanvienSet) {
+        this.nhanvienSet = nhanvienSet;
     }
 
     @Override
@@ -190,6 +199,20 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.nhtc.pojo.User[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the confirmPassword
+     */
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    /**
+     * @param confirmPassword the confirmPassword to set
+     */
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
     
 }

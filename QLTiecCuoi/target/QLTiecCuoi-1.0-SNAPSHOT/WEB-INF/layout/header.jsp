@@ -78,8 +78,22 @@
             <li class="nav-item">
                 <a class="btn btn-warning text-white" href="#"><b>ĐẶT TIỆC NGAY</b></a>
             </li>
+            <c:if test="${pageContext.request.userPrincipal.name == null}">
+                <li class="nav-item" style="margin: 0 5px">
+                    <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/login" />"><b>Đăng nhập</b></a>
+                </li>
+            </c:if>
+            <c:if test="${pageContext.request.userPrincipal.name != null}">
+                <li class="nav-item" style="margin: 0 5px">
+                    <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/" />">${pageContext.request.userPrincipal.name}</a>
+                </li>
+                 <li class="nav-item" style="margin: 0 5px">
+                    <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/logout" />">Ðang Xuat</a>
+                </li>
+            </c:if>
+            
             <li class="nav-item" style="margin: 0 5px">
-                <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="#"><b>Đăng nhập</b></a>
+                <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/register" />"><b>Đăng Ký</b></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark w3-hover-text-orange" href="#"><b>VI</b></a>

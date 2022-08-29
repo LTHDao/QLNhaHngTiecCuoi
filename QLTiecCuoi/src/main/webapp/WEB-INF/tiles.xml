@@ -32,4 +32,20 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content" 
                        value="/WEB-INF/jsp/thucDon.jsp" />
     </definition>
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="title" value="Dang Nhap" />
+        <put-attribute name="content" 
+                       value="/WEB-INF/jsp/login.jsp" />
+    </definition>
+    <definition name="register" extends="baseLayout">
+        <put-attribute name="title" value="Dang Ky" />
+        <put-attribute name="content" 
+                       value="/WEB-INF/jsp/register.jsp" />
+    </definition>
+    <definition name="qldichvu" extends="baseLayout">
+        <put-attribute name="title" value="Quan Ly Dich Vu" />
+        <put-attribute name="content" 
+                       value="/WEB-INF/jsp/qldichvu.jsp" />
+    </definition>
+    
 </tiles-definitions>

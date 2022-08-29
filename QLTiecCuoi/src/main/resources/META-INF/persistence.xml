@@ -6,7 +6,6 @@
     <class>com.nhtc.pojo.Khachhang</class>
     <class>com.nhtc.pojo.Sanhcuoi</class>
     <class>com.nhtc.pojo.Dondattiec</class>
-    <class>com.nhtc.pojo.User</class>
     <class>com.nhtc.pojo.Hoadon</class>
     <class>com.nhtc.pojo.Monan</class>
     <class>com.nhtc.pojo.Loaimon</class>
@@ -14,8 +13,10 @@
     <class>com.nhtc.pojo.Phieudatdichvu</class>
     <class>com.nhtc.pojo.Userrole</class>
     <class>com.nhtc.pojo.Loaidichvu</class>
-    <class>com.nhtc.pojo.Nhanvien</class>
     <class>com.nhtc.pojo.Dichvu</class>
+    <class>com.nhtc.pojo.Loaisanh</class>
+    <class>com.nhtc.pojo.User</class>
+    <class>com.nhtc.pojo.Nhanvien</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/nhahangtieccuoi?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

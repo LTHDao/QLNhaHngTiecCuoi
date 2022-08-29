@@ -5,22 +5,28 @@
 package com.nhtc.pojo;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author hdao2
+ * @author Minh
  */
 @Entity
 @Table(name = "dichvu")
@@ -36,8 +42,8 @@ public class Dichvu implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idDichVu")
     private Integer idDichVu;
     @Basic(optional = false)
@@ -45,7 +51,7 @@ public class Dichvu implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tenDichVu")
     private String tenDichVu;
-    @Size(max = 200)
+    @Size(max = 250)
     @Column(name = "chiTiet")
     private String chiTiet;
     @Basic(optional = false)
@@ -58,6 +64,8 @@ public class Dichvu implements Serializable {
     @JoinColumn(name = "loaiDichVu", referencedColumnName = "idloaidichvu")
     @ManyToOne(optional = false)
     private Loaidichvu loaiDichVu;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDichVu")
+    private Set<Phieudatdichvu> phieudatdichvuSet;
 
     public Dichvu() {
     }
@@ -118,6 +126,15 @@ public class Dichvu implements Serializable {
 
     public void setLoaiDichVu(Loaidichvu loaiDichVu) {
         this.loaiDichVu = loaiDichVu;
+    }
+
+    @XmlTransient
+    public Set<Phieudatdichvu> getPhieudatdichvuSet() {
+        return phieudatdichvuSet;
+    }
+
+    public void setPhieudatdichvuSet(Set<Phieudatdichvu> phieudatdichvuSet) {
+        this.phieudatdichvuSet = phieudatdichvuSet;
     }
 
     @Override

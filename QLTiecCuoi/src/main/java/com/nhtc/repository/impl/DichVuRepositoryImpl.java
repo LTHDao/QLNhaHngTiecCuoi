@@ -93,4 +93,22 @@ public class DichVuRepositoryImpl implements DichVuRepository {
         return Long.parseLong(q.getSingleResult().toString());
     }
 
+    @Override
+    public List<Dichvu> getDichvu(String kw) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean addOrUpdate(Dichvu dichvu) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try{ 
+            session.save(dichvu);
+            return true;
+        }catch(Exception ex){
+            System.err.println("===+THEM DICH VU+===" + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
 }

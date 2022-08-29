@@ -17,4 +17,6 @@ public interface DichVuService {
     Loaidichvu getLoaiDichVuByID(int loaiDichVuID);
     List<Dichvu> getDichVu(String params, int page);
     long countDichVu(String params);
+    
+    boolean addOrUpdate(Dichvu dichvu);
 }
