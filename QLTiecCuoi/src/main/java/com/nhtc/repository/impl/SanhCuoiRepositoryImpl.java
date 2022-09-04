@@ -20,15 +20,31 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class SanhCuoiRepositoryImpl implements SanhCuoiRepository{
+public class SanhCuoiRepositoryImpl implements SanhCuoiRepository {
+
     @Autowired
     LocalSessionFactoryBean sessionFactory;
-    
+
     @Override
     public List<Sanhcuoi> getSanhCuoi() {
         Session s = sessionFactory.getObject().getCurrentSession();
         Query q = s.createQuery("From Sanhcuoi");
-        
+
         return q.getResultList();
     }
+
+    @Override
+    public boolean addSanhCuoi(Sanhcuoi sanhCuoi) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.save(sanhCuoi);
+            return true;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+
 }

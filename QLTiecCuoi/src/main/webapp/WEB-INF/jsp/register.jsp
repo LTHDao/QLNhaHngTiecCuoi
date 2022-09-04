@@ -19,7 +19,7 @@
 <c:url value="/register" var="action"/>
 
 <div class ="container">
-    <form:form method="post" action="${action}" modelAttribute="user">
+    <form:form method="post" action="${action}" enctype="multipart/form-data" modelAttribute="user">
 
         <div class="form-group">
             <label>Ho Ten</label>
@@ -49,6 +49,11 @@
         <div class="form-group">
             <label>Email</label>
             <form:input type="text" id="email" path="email" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label>Avatar</label>
+            <form:input type="file" id="file" path="file" cssClass="form-control"/>
         </div>
 
         <div class="form-group">

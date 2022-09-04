@@ -49,6 +49,7 @@
                         <td>${s.dienTich}</td>
                         <td>${s.soLuongBan}</td>
                         <td>${s.giaToiThieu}</td>
+                        
                     </tr>
                 </tbody>
                 </c:forEach>

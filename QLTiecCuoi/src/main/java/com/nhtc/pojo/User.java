@@ -5,9 +5,7 @@
 package com.nhtc.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,13 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -41,11 +38,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar"),
     @NamedQuery(name = "User.findByUserRole", query = "SELECT u FROM User u WHERE u.userRole = :userRole")})
 public class User implements Serializable {
-    
+
     public static final String ADMIN = "ROLE_ADMIN";
     public static final String USER = "ROLE_USER";
     public static final String EMPLOYEE = "ROLE_EMPLOYEE";
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,12 +79,13 @@ public class User implements Serializable {
     @Size(max = 10)
     @Column(name = "userRole")
     private String userRole;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
-    private Set<Nhanvien> nhanvienSet;
     
     @Transient
-    private String confirmPassword;
+    private MultipartFile file;
 
+    @Transient
+    private String confirmPassword;
+    
     public User() {
     }
 
@@ -167,15 +165,6 @@ public class User implements Serializable {
         this.userRole = userRole;
     }
 
-    @XmlTransient
-    public Set<Nhanvien> getNhanvienSet() {
-        return nhanvienSet;
-    }
-
-    public void setNhanvienSet(Set<Nhanvien> nhanvienSet) {
-        this.nhanvienSet = nhanvienSet;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -199,6 +188,20 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.nhtc.pojo.User[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     /**

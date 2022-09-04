@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <h1 class="text-center text-danger">Quan Ly Dich Vu</h1>
 
 <c:url value="/admin/qldichvu" var="action"/>
@@ -40,9 +41,9 @@
         </div>
         <div class="form-group">
             <label>Loai Dich Vu</label>
-            <form:select id="loaiDichVu" path="loaiDichVu" cssClass="form-control">
-                <c:forEach items="${loaidichvu}" var="loaidichvu">
-                    <option value="${loaidichvu.idloaidichvu}">${loaidichvu.tenLoaiDichVu}</option>
+            <form:select id="loaidichVu" path="loaiDichVu" cssClass="form-select">
+                <c:forEach items="${loaidichvu}" var="loai">
+                    <option value="${loai.idloaidichvu}">${loai.tenLoaiDichVu}</option>
                 </c:forEach>
             </form:select>
         </div>
@@ -50,6 +51,26 @@
             <input type="Submit" value="Them" class="btn btn-danger"/>
         </div>
     </form:form>
+
+    <table class="table">
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tbody id="adminDichvu">
+
+        </tbody>
+    </table>
+
+    <script src="<c:url value="/js/dichvu.js" />"></script>
+    <script>
+        <c:url value="/api/qldichvu" var="endpoint" />
+        window.onload = function (){
+            loadAdminDichvu('${endpoint}');
+        }
+    </script>
 </div>
 
 

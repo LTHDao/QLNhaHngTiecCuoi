@@ -5,7 +5,19 @@
 --%>
 
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+    <div style="padding-top: 15px; margin-left: 30px; margin-bottom: 15px">
+        <a class="btn btn-warning text-white" href="<c:url value="/admin/qldichvu"/>">Quản Lý Dịch Vụ</a> 
+    </div>
+</sec:authorize>
+
+    
+
+
 <div class="w3-animate-opacity" style="background-image: url(https://res.cloudinary.com/btlde1/image/upload/v1660833708/QLNhaHangTiecCuoi/tieccuoi5_tjqecp.jpg); 
      width: 100%; height: 600px; position: relative">
     <div style="padding: 150px 0 0 80px; width: 100%; height: 100%; background-image: radial-gradient(#000000b8, transparent)">

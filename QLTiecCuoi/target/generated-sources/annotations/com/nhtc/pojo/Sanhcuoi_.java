@@ -1,19 +1,16 @@
 package com.nhtc.pojo;
 
-import com.nhtc.pojo.Dondattiec;
 import javax.annotation.Generated;
-import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-29T19:29:59")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-09-04T15:22:09")
 @StaticMetamodel(Sanhcuoi.class)
 public class Sanhcuoi_ { 
 
     public static volatile SingularAttribute<Sanhcuoi, Float> giaToiThieu;
     public static volatile SingularAttribute<Sanhcuoi, String> hinhAnh;
     public static volatile SingularAttribute<Sanhcuoi, String> tenSanh;
-    public static volatile SetAttribute<Sanhcuoi, Dondattiec> dondattiecSet;
     public static volatile SingularAttribute<Sanhcuoi, Integer> idSanhCuoi;
     public static volatile SingularAttribute<Sanhcuoi, Integer> soLuongBan;
     public static volatile SingularAttribute<Sanhcuoi, Double> dienTich;

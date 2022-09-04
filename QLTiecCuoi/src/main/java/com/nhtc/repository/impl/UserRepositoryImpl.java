@@ -36,7 +36,6 @@ public class UserRepositoryImpl implements UserRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try{
             session.save(user);
-//            session.getTransaction().commit();
             return true;
         } catch  (HibernateException ex){
             System.err.println(ex.getMessage());
@@ -59,6 +58,6 @@ public class UserRepositoryImpl implements UserRepository {
         }
         Query q = session.createQuery(query);
         return q.getResultList();
-    } //lay user tu day
+    } 
 
 }

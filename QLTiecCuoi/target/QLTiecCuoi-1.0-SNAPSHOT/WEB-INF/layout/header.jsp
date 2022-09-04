@@ -6,6 +6,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+
 <nav class="navbar navbar-expand-sm bg-light justify-content-center" 
      style="width: 100%; position: fixed; top: 0; left: 0; z-index: 7000;">
     <div class="container-fluid">
@@ -42,7 +44,7 @@
                         </a>
                     </li>
                 </ul>
-                
+
                 <button class="btn btn-warning btn-lg w3-hover-text-orange w3-hover-white text-white" 
                         style="position: absolute; bottom: 130px; margin-left: 95px">
                     <b>ĐẶT TIỆC NGAY</b>
@@ -78,6 +80,7 @@
             <li class="nav-item">
                 <a class="btn btn-warning text-white" href="#"><b>ĐẶT TIỆC NGAY</b></a>
             </li>
+            
             <c:if test="${pageContext.request.userPrincipal.name == null}">
                 <li class="nav-item" style="margin: 0 5px">
                     <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/login" />"><b>Đăng nhập</b></a>
@@ -87,11 +90,11 @@
                 <li class="nav-item" style="margin: 0 5px">
                     <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/" />">${pageContext.request.userPrincipal.name}</a>
                 </li>
-                 <li class="nav-item" style="margin: 0 5px">
+                <li class="nav-item" style="margin: 0 5px">
                     <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/logout" />">Ðang Xuat</a>
                 </li>
             </c:if>
-            
+
             <li class="nav-item" style="margin: 0 5px">
                 <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/register" />"><b>Đăng Ký</b></a>
             </li>

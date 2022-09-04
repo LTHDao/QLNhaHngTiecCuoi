@@ -18,5 +18,8 @@ public interface DichVuService {
     List<Dichvu> getDichVu(String params, int page);
     long countDichVu(String params);
     
-    boolean addOrUpdate(Dichvu dichvu);
+//    Dichvu getDichvuByID(int idDichvu);
+    boolean addDichVu(Dichvu dichvu);
+    boolean deleteDichVu(int id);
+
 }

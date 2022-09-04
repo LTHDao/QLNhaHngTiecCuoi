@@ -4,6 +4,8 @@
  */
 package com.nhtc.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,19 +26,20 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableWebSecurity
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
-//    "com.nhtc.controllers",
+    "com.nhtc.controllers",
     "com.nhtc.repository",
     "com.nhtc.service"
 })
 
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    } 
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,12 +50,27 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password");
         http.formLogin().defaultSuccessUrl("/").failureUrl("/login?error");
-        
+
         http.logout().logoutSuccessUrl("/login");
+
+        http.exceptionHandling().accessDeniedPage("/login?accessDenied");
+
+        http.authorizeRequests().antMatchers("/").permitAll()
+                .antMatchers("/admin/**")
+                .access("hasRole('ROLE_ADMIN')");
 
         http.csrf().disable();
     }
     
-    
+        @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+            "cloud_name", "drnm5kirb",
+            "api_key", "663812597625436",
+            "api_secret", "ame8Vh_RquDVE50SBsw3Kes-CJ8",
+            "secure", true));
+        return cloudinary;
+    }
+
 
 }

@@ -17,7 +17,7 @@ public interface DichVuRepository {
     Loaidichvu getLoaiDichVuByID(int loaiDichVuID);
     List<Dichvu> getDichVu(String params, int page);
     long countDichVu(String params);
-    
-    List<Dichvu> getDichvu(String kw);
-    boolean addOrUpdate(Dichvu dichvu);
+
+    boolean addDichVu(Dichvu dichvu);
+    boolean deleteDichVu(int id);
 }

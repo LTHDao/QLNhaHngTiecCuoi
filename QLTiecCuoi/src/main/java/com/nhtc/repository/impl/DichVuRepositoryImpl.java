@@ -66,10 +66,11 @@ public class DichVuRepositoryImpl implements DichVuRepository {
         }
         Query query = session.createQuery(q);
 
-        int max = Integer.parseInt(env.getProperty("page.size").toString());
-        query.setMaxResults(max);
-        query.setFirstResult((page - 1) * max);
-
+        if (page > 0) {
+            int max = Integer.parseInt(env.getProperty("page.size").toString());
+            query.setMaxResults(max);
+            query.setFirstResult((page - 1) * max);
+        }
         return query.getResultList();
     }
 
@@ -94,21 +95,32 @@ public class DichVuRepositoryImpl implements DichVuRepository {
     }
 
     @Override
-    public List<Dichvu> getDichvu(String kw) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean addOrUpdate(Dichvu dichvu) {
+    public boolean addDichVu(Dichvu dichvu) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        try{ 
+        try {
             session.save(dichvu);
             return true;
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.err.println("===+THEM DICH VU+===" + ex.getMessage());
             ex.printStackTrace();
         }
         return false;
     }
+
+    @Override
+    public boolean deleteDichVu(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            Dichvu dv = session.get(Dichvu.class, id);
+            session.delete(dv);
+            return true;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+
 
 }

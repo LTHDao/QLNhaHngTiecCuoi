@@ -21,11 +21,11 @@ import org.springframework.stereotype.Service;
  * @author hdao2
  */
 @Service
-public class DichVuServiceImpl implements DichVuService{
-    
-//    @Autowired
-//    private Cloudinary Cloudinary;
-    
+public class DichVuServiceImpl implements DichVuService {
+
+    @Autowired
+    private Cloudinary Cloudinary;
+
     @Autowired
     private DichVuRepository dichVuRepository;
 
@@ -50,18 +50,29 @@ public class DichVuServiceImpl implements DichVuService{
     }
 
     @Override
-    public boolean addOrUpdate(Dichvu dichvu) {
-//         try {
-//             Map r = this.Cloudinary.uploader().upload(dichvu.getFile().getBytes(),
-//                ObjectUtils.asMap("resource_type", "auto"));
-//            dichvu.setHinhAnh((String) r.get("secure_url"));
-//            
-                return this.dichVuRepository.addOrUpdate(dichvu);
-//        } catch (IOException ex) {
-//                System.err.println("==ADD DICHVU==" + ex.getMessage());
-//        }
-//        return false;
-        }
-    
-}
+    public boolean addDichVu(Dichvu dichvu) {
+        try {
+            Map r = this.Cloudinary.uploader().upload(dichvu.getFile().getBytes(),
+                    ObjectUtils.asMap("resource_type", "auto"));
+            dichvu.setHinhAnh((String) r.get("secure_url"));
 
+            return this.dichVuRepository.addDichVu(dichvu);
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return false;
+    }
+
+//    @Override
+//    public Dichvu getDichvuByID(int idDichvu) {
+//        return this.dichVuRepository.getDichvuByID(idDichvu);
+//    }
+    @Override
+    public boolean deleteDichVu(int id) {
+        return this.dichVuRepository.deleteDichVu(id);
+    }
+
+
+   
+
+}

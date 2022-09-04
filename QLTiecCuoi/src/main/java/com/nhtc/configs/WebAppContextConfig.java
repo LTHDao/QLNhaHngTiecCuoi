@@ -6,11 +6,13 @@ package com.nhtc.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.nhtc.formatter.LoaidichvuFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -50,31 +52,27 @@ public class WebAppContextConfig implements WebMvcConfigurer {
 //    }
 //
 //    
-//    @Bean
-//    public CommonsMultipartResolver multipartResolver() {
-//        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-//        resolver.setDefaultEncoding("UTF-8");
-//
-//        return resolver;
-//    }
-    
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8");
+
+        return resolver;
+    }
+
     @Override
-    public void addResourceHandlers(
-            ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/css/**")
-                .addResourceLocations("/resources/css/");
-//        registry.addResourceHandler("/img/**")
-//                .addResourceLocations("/resources/images/");
+    public void addResourceHandlers(ResourceHandlerRegistry registry){
+        registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
     }
 
 //    @Bean
 //    public Cloudinary cloudinary() {
-//        Cloudinary c = new Cloudinary(ObjectUtils.asMap(
-//                "cloud_name", "btlde1",
-//                "api_key", "552619991478794",
-//                "api_secret", "Sn3YuymDtIPCIG0zVugrVJgSlx8",
-//                "secure", true));
-//        return c;
+//        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+//            "cloud_name", "drnm5kirb",
+//            "api_key", "663812597625436",
+//            "api_secret", "ame8Vh_RquDVE50SBsw3Kes-CJ8",
+//            "secure", true));
+//        return cloudinary;
 //    }
 
     @Override
@@ -87,6 +85,11 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         LocalValidatorFactoryBean v = new LocalValidatorFactoryBean();
         v.setValidationMessageSource(messageSource());
         return v;
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new LoaidichvuFormatter());
     }
 
     @Bean
