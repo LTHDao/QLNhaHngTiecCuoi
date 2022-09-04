@@ -38,36 +38,15 @@ public class ApiPhanHoiController {
         MediaType.APPLICATION_JSON_VALUE
     })
     public ResponseEntity<PhanHoi> addPhanHoi(@RequestBody Map<String, String> params) {
-//        try {
+        try {
             String noiDung = params.get("noiDung");
             PhanHoi p = this.phanHoiService.addPhanHoi(noiDung);
 
             return new ResponseEntity<>(p, HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
-
-//    @GetMapping("/PhanHoi")
-//    public ResponseEntity<PhanHoi> getPhanHoi() {
-////        try {
-////            String noiDung = params.get("noiDung");
-//////            String username = params.get("username");
-////            int userId = Integer.parseInt(params.get("userId"));
-////            
-////            PhanHoi p = this.phanHoiService.addPhanHoi(noiDung, userId);
-////            
-////            return new ResponseEntity<>(p, HttpStatus.CREATED);
-////        } catch (Exception e) {
-////            e.printStackTrace();
-////        }
-//        return new ResponseEntity<>(p, HttpStatus.CREATED);
-//    }
-//
-//    @PostMapping("/{userId}/phanHoi")
-//    public ResponseEntity<PhanHoi> addPhanHoi(@RequestBody Map<String, String> params) {
-//
-//    }
 }

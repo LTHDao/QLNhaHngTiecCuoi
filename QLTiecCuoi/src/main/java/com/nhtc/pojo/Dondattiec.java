@@ -62,8 +62,10 @@ public class Dondattiec implements Serializable {
     @Column(name = "soBan")
     private int soBan;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTiecCuoi")
+    @JsonIgnore
     private Set<Phieudatmon> phieudatmonSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTiecCuoi")
+    @JsonIgnore
     private Set<Hoadon> hoadonSet;
     @JoinColumn(name = "idCaToChuc", referencedColumnName = "id")
     @ManyToOne(optional = false)

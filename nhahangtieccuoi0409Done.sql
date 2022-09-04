@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
 -- Host: localhost    Database: nhahangtieccuoi2508
 -- ------------------------------------------------------
--- Server version	8.0.28
+-- Server version	8.0.27
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,8 +26,9 @@ CREATE TABLE `catochuc` (
   `id` int NOT NULL AUTO_INCREMENT,
   `thoiGian` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `giaTang` decimal(10,0) DEFAULT NULL,
+  `loai_ngay` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,6 +37,7 @@ CREATE TABLE `catochuc` (
 
 LOCK TABLES `catochuc` WRITE;
 /*!40000 ALTER TABLE `catochuc` DISABLE KEYS */;
+INSERT INTO `catochuc` VALUES (1,'Sáng',0,'THUONG'),(2,'Sáng',100000,'CUOI TUAN'),(3,'Tối',500000,'THUONG'),(4,'Tối',1500000,'CUOI TUAN');
 /*!40000 ALTER TABLE `catochuc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,7 +52,7 @@ CREATE TABLE `dichvu` (
   `idDichVu` int NOT NULL AUTO_INCREMENT,
   `tenDichVu` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `chiTiet` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `giaDichVu` float NOT NULL,
+  `giaDichVu` decimal(10,0) NOT NULL,
   `hinhAnh` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `loaiDichVu` int NOT NULL,
   PRIMARY KEY (`idDichVu`),
@@ -78,20 +80,21 @@ DROP TABLE IF EXISTS `dondattiec`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dondattiec` (
-  `idDonDatTiec` int NOT NULL,
-  `chitTiet` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `idDonDatTiec` int NOT NULL AUTO_INCREMENT,
+  `chitTiet` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `idKhachHang` int NOT NULL,
   `idSanh` int NOT NULL,
   `idCaToChuc` int NOT NULL,
-  `ngayToChuc` date NOT NULL,
+  `ngayToChuc` datetime NOT NULL,
+  `soBan` int NOT NULL,
   PRIMARY KEY (`idDonDatTiec`),
+  KEY `fk_dondattiec_catochuc_idx` (`idCaToChuc`),
   KEY `KhachHangDatTiec_idx` (`idKhachHang`),
   KEY `ChonSanhCuoi_idx` (`idSanh`),
-  KEY `fk_dondattiec_catochuc_idx` (`idCaToChuc`),
   CONSTRAINT `ChonSanhCuoi` FOREIGN KEY (`idSanh`) REFERENCES `sanhcuoi` (`idSanhCuoi`),
   CONSTRAINT `fk_dondattiec_catochuc` FOREIGN KEY (`idCaToChuc`) REFERENCES `catochuc` (`id`),
   CONSTRAINT `KhachHangDatTiec` FOREIGN KEY (`idKhachHang`) REFERENCES `khachhang` (`idKhachHang`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,6 +103,7 @@ CREATE TABLE `dondattiec` (
 
 LOCK TABLES `dondattiec` WRITE;
 /*!40000 ALTER TABLE `dondattiec` DISABLE KEYS */;
+INSERT INTO `dondattiec` VALUES (108,'không',98,3,1,'2020-02-05 08:00:00',30),(109,'',99,4,4,'2020-03-15 22:16:00',20),(110,'',100,2,1,'2020-05-08 12:17:00',35),(111,'không lưu ý',101,5,2,'2020-11-21 12:18:00',25),(112,'',102,4,3,'2021-07-06 00:19:00',10),(113,'',103,5,2,'2021-01-10 12:20:00',12),(114,'',104,1,1,'2022-10-20 12:20:00',32),(115,'',105,2,4,'2022-03-05 21:21:00',22),(116,'',106,6,3,'2022-09-01 17:23:00',40),(117,'',107,1,3,'2022-09-05 00:27:00',10);
 /*!40000 ALTER TABLE `dondattiec` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,14 +115,13 @@ DROP TABLE IF EXISTS `hoadon`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hoadon` (
-  `idhoadon` int NOT NULL,
+  `idhoadon` int NOT NULL AUTO_INCREMENT,
   `tongGia` decimal(10,0) NOT NULL,
   `idTiecCuoi` int NOT NULL,
   PRIMARY KEY (`idhoadon`),
-  UNIQUE KEY `idTiecCuoi_UNIQUE` (`idTiecCuoi`),
   KEY `fk_hoadon_tieccuoi_idx` (`idTiecCuoi`),
   CONSTRAINT `fk_hoadon_tieccuoi` FOREIGN KEY (`idTiecCuoi`) REFERENCES `dondattiec` (`idDonDatTiec`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,6 +130,7 @@ CREATE TABLE `hoadon` (
 
 LOCK TABLES `hoadon` WRITE;
 /*!40000 ALTER TABLE `hoadon` DISABLE KEYS */;
+INSERT INTO `hoadon` VALUES (50,118400000,108),(51,47050000,109),(52,66500000,110),(53,49600000,111),(54,33100000,112),(55,25020000,113),(56,54940000,114),(57,81770000,115),(58,54650000,116),(59,2300000,117);
 /*!40000 ALTER TABLE `hoadon` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,12 +142,12 @@ DROP TABLE IF EXISTS `khachhang`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `khachhang` (
-  `idKhachHang` int NOT NULL,
+  `idKhachHang` int NOT NULL AUTO_INCREMENT,
   `tenKH` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sdt` int NOT NULL,
+  `sdt` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`idKhachHang`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,6 +156,7 @@ CREATE TABLE `khachhang` (
 
 LOCK TABLES `khachhang` WRITE;
 /*!40000 ALTER TABLE `khachhang` DISABLE KEYS */;
+INSERT INTO `khachhang` VALUES (98,'Hồng Đào','0123123123','lthdao1509@gmail.com'),(99,'Thu Minh','0222333444','k1796dao@gmail.com'),(100,'Diễm Lộc','0111234567','lthdao1509@gmail.com'),(101,'Duy An','0111222333','hdao2309@gmail.com'),(102,'Văn Phúc','0779223115','lthdao1509@gmail.com'),(103,'Duy Tân','0231236325','hdao2309@gmail.com'),(104,'Nam Cao','0556223445','k1796dao@gmail.com'),(105,'Tuấn Kiệt','0325614235','lthdao1509@gmail.com'),(106,'Thu Hiền','0325614856','lthdao1509@gmail.com'),(107,'Bích Hồng','0123123123','lthdao1509@gmail.com');
 /*!40000 ALTER TABLE `khachhang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +218,7 @@ DROP TABLE IF EXISTS `monan`;
 CREATE TABLE `monan` (
   `id` int NOT NULL,
   `ten` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gia` float NOT NULL,
+  `gia` decimal(10,0) NOT NULL,
   `moTa` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `hinhAnh` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `idThucDon` int NOT NULL,
@@ -264,6 +269,34 @@ LOCK TABLES `nhanvien` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `phan_hoi`
+--
+
+DROP TABLE IF EXISTS `phan_hoi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `phan_hoi` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `noi_dung` varchar(300) COLLATE utf8mb4_turkish_ci NOT NULL,
+  `ngay_phan_hoi` datetime NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_phanhoi_user_idx` (`user_id`),
+  CONSTRAINT `fk_phanhoi_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `phan_hoi`
+--
+
+LOCK TABLES `phan_hoi` WRITE;
+/*!40000 ALTER TABLE `phan_hoi` DISABLE KEYS */;
+INSERT INTO `phan_hoi` VALUES (1,'good','2022-08-31 00:00:00',2),(2,'good','2022-08-31 00:00:00',2),(3,'tốt','2022-08-31 21:22:52',2),(4,'thích lắm','2022-09-02 00:18:26',2),(5,'hahaha','2022-09-02 21:00:29',2),(6,'thức ăn ngon','2022-09-05 00:26:29',2);
+/*!40000 ALTER TABLE `phan_hoi` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `phieudatdichvu`
 --
 
@@ -271,16 +304,16 @@ DROP TABLE IF EXISTS `phieudatdichvu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `phieudatdichvu` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `idDichVu` int NOT NULL,
   `idTiecCuoi` int NOT NULL,
   `ghiChu` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_phieudichvu_tieccuoi_idx` (`idTiecCuoi`),
   KEY `fk_phieudichvu_dichvu_idx` (`idDichVu`),
+  KEY `fk_phieudichvu_tieccuoi_idx` (`idTiecCuoi`),
   CONSTRAINT `fk_phieudichvu_dichvu` FOREIGN KEY (`idDichVu`) REFERENCES `dichvu` (`idDichVu`),
   CONSTRAINT `fk_phieudichvu_tieccuoi` FOREIGN KEY (`idTiecCuoi`) REFERENCES `dondattiec` (`idDonDatTiec`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -289,6 +322,7 @@ CREATE TABLE `phieudatdichvu` (
 
 LOCK TABLES `phieudatdichvu` WRITE;
 /*!40000 ALTER TABLE `phieudatdichvu` DISABLE KEYS */;
+INSERT INTO `phieudatdichvu` VALUES (210,1,108,NULL),(211,3,108,NULL),(212,4,108,NULL),(213,2,108,NULL),(214,5,108,NULL),(215,6,108,NULL),(216,11,108,NULL),(217,9,108,NULL),(218,12,108,NULL),(219,7,108,NULL),(220,14,108,NULL),(221,17,108,NULL),(222,22,108,NULL),(223,20,108,NULL),(224,19,108,NULL),(225,1,109,NULL),(226,13,109,NULL),(227,18,109,NULL),(228,17,109,NULL),(229,5,109,NULL),(230,1,110,NULL),(231,12,110,NULL),(232,17,110,NULL),(233,5,110,NULL),(234,21,110,NULL),(235,10,111,NULL),(236,21,111,NULL),(237,3,111,NULL),(238,10,112,NULL),(239,22,112,NULL),(240,18,112,NULL),(241,12,112,NULL),(242,7,113,NULL),(243,17,113,NULL),(244,10,113,NULL),(245,3,113,NULL),(246,12,113,NULL),(247,10,114,NULL),(248,12,114,NULL),(249,1,114,NULL),(250,1,115,NULL),(251,3,115,NULL),(252,6,115,NULL),(253,2,115,NULL),(254,9,115,NULL),(255,5,115,NULL),(256,10,115,NULL),(257,12,115,NULL),(258,17,115,NULL),(259,21,115,NULL),(260,4,116,NULL),(261,17,116,NULL),(262,12,116,NULL),(263,8,116,NULL);
 /*!40000 ALTER TABLE `phieudatdichvu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -300,18 +334,16 @@ DROP TABLE IF EXISTS `phieudatmon`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `phieudatmon` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `idMonAn` int NOT NULL,
   `idTiecCuoi` int NOT NULL,
-  `soLuong` int NOT NULL,
-  `gia` decimal(10,0) NOT NULL,
   `ghiChu` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_phieuDatMon_monAn_idx` (`idMonAn`),
   KEY `fk_phieuDatMon_tiecCuoi_idx` (`idTiecCuoi`),
   CONSTRAINT `fk_phieuDatMon_monAn` FOREIGN KEY (`idMonAn`) REFERENCES `monan` (`id`),
   CONSTRAINT `fk_phieuDatMon_tiecCuoi` FOREIGN KEY (`idTiecCuoi`) REFERENCES `dondattiec` (`idDonDatTiec`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=268 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,6 +352,7 @@ CREATE TABLE `phieudatmon` (
 
 LOCK TABLES `phieudatmon` WRITE;
 /*!40000 ALTER TABLE `phieudatmon` DISABLE KEYS */;
+INSERT INTO `phieudatmon` VALUES (231,2,108,NULL),(232,3,108,NULL),(233,10,108,NULL),(234,15,108,NULL),(235,11,108,NULL),(236,12,108,NULL),(237,3,109,NULL),(238,16,109,NULL),(239,7,109,NULL),(240,13,109,NULL),(241,2,110,NULL),(242,16,110,NULL),(243,14,110,NULL),(244,8,110,NULL),(245,2,111,NULL),(246,7,111,NULL),(247,14,111,NULL),(248,11,111,NULL),(249,3,112,NULL),(250,16,112,NULL),(251,7,112,NULL),(252,13,112,NULL),(253,3,113,NULL),(254,17,113,NULL),(255,11,113,NULL),(256,16,114,NULL),(257,2,114,NULL),(258,11,114,NULL),(259,3,115,NULL),(260,7,115,NULL),(261,17,115,NULL),(262,11,115,NULL),(263,13,115,NULL),(264,14,115,NULL),(265,16,116,NULL),(266,7,116,NULL),(267,14,116,NULL);
 /*!40000 ALTER TABLE `phieudatmon` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,15 +364,15 @@ DROP TABLE IF EXISTS `sanhcuoi`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sanhcuoi` (
-  `idSanhCuoi` int NOT NULL,
+  `idSanhCuoi` int NOT NULL AUTO_INCREMENT,
   `tenSanh` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `giaToiThieu` float NOT NULL,
+  `giaToiThieu` decimal(10,0) NOT NULL,
   `moTa` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `dienTich` double NOT NULL,
   `soLuongBan` int NOT NULL,
   `hinhAnh` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`idSanhCuoi`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,11 +399,11 @@ CREATE TABLE `user` (
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sdt` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `userRole` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -379,7 +412,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Thu Minh','minh1','$2a$10$3OhhPnSXV0PvE/HJ22vcous3T6V65ofuYGlpVcSNO2c4bAM1Agj.a','0987654345','minh11@gmail.com',NULL,'ROLE_USER'),(2,'HDao','dao1','$2a$10$3FwiKNGsWE00arfc0IfZGeqFr1aqjWG5KiSe6q9a57ZncPCEgIaze','0987654323','dao1@gmail.com',NULL,'ROLE_USER');
+INSERT INTO `user` VALUES (1,'Thu Minh','minh1','$2a$10$3OhhPnSXV0PvE/HJ22vcous3T6V65ofuYGlpVcSNO2c4bAM1Agj.a','0987654345','minh11@gmail.com','https://res.cloudinary.com/btlde1/image/upload/v1661066169/QLNhaHangTiecCuoi/mon%20an/monan13_wotojx.jpg','ROLE_ADMIN'),(2,'HDao','dao1','$2a$10$3FwiKNGsWE00arfc0IfZGeqFr1aqjWG5KiSe6q9a57ZncPCEgIaze','0987654323','dao1@gmail.com','https://res.cloudinary.com/btlde1/image/upload/v1661066173/QLNhaHangTiecCuoi/mon%20an/monan2_grz7dd.png','ROLE_USER'),(3,'Hong','dao2','$2a$10$btMMA6ZUeU5hxu5rCMD/9OvktAYyHnCQHHNBRF8Py9BVGd9sbOSUu','0123456789','hdao2309@gmail.com','https://res.cloudinary.com/btlde1/image/upload/v1661066174/QLNhaHangTiecCuoi/mon%20an/monan6_ftk1pe.jpg','ROLE_USER');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -392,4 +425,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-29 19:36:39
+-- Dump completed on 2022-09-05  0:33:59

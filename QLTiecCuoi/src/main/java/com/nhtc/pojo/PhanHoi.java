@@ -54,7 +54,7 @@ public class PhanHoi implements Serializable {
     @NotNull
     @Column(name = "ngay_phan_hoi")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date ngayPhanHoi;
+    private Date ngayPhanHoi= new Date();
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     @JsonProperty("user")
