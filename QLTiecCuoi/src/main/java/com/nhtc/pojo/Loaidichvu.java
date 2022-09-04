@@ -4,6 +4,7 @@
  */
 package com.nhtc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -47,6 +48,7 @@ public class Loaidichvu implements Serializable {
     @Column(name = "tenLoaiDichVu")
     private String tenLoaiDichVu;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "loaiDichVu")
+    @JsonIgnore
     private Set<Dichvu> dichvuSet;
 
     public Loaidichvu() {

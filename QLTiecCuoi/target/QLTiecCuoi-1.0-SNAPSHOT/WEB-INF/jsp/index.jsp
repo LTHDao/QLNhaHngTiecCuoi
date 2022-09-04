@@ -12,10 +12,11 @@
 <sec:authorize access="hasRole('ROLE_ADMIN')">
     <div style="padding-top: 15px; margin-left: 30px; margin-bottom: 15px">
         <a class="btn btn-warning text-white" href="<c:url value="/admin/qldichvu"/>">Quản Lý Dịch Vụ</a> 
+        <a class="btn btn-warning text-white" href="<c:url value="/admin/qlsanhcuoi"/>">Quản Lý Sảnh Cưới</a> 
+        <a class="btn btn-warning text-white" href="<c:url value="/admin/thongKeMatDo"/>">Thống kê mật độ</a> 
+        <a class="btn btn-warning text-white" href="<c:url value="/admin/thongKeDoanhThu"/>">Thống kê doanh thu</a> 
     </div>
 </sec:authorize>
-
-    
 
 
 <div class="w3-animate-opacity" style="background-image: url(https://res.cloudinary.com/btlde1/image/upload/v1660833708/QLNhaHangTiecCuoi/tieccuoi5_tjqecp.jpg); 

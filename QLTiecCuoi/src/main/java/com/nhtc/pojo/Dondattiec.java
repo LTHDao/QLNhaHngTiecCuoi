@@ -4,6 +4,7 @@
  */
 package com.nhtc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -74,6 +75,7 @@ public class Dondattiec implements Serializable {
     @ManyToOne(optional = false)
     private Sanhcuoi idSanh;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTiecCuoi")
+    @JsonIgnore
     private Set<Phieudatdichvu> phieudatdichvuSet;
 
     public Dondattiec() {

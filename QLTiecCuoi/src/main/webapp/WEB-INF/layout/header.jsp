@@ -45,10 +45,11 @@
                     </li>
                 </ul>
 
-                <button class="btn btn-warning btn-lg w3-hover-text-orange w3-hover-white text-white" 
-                        style="position: absolute; bottom: 130px; margin-left: 95px">
+                <a class="btn btn-warning btn-lg w3-hover-text-orange w3-hover-white text-white" 
+                        style="position: absolute; bottom: 130px; margin-left: 95px"
+                        href="<c:url value="/tieccuoi"/>">
                     <b>ĐẶT TIỆC NGAY</b>
-                </button>
+                </a>
 
                 <ul class="nav justify-content-end" style="position: absolute; bottom: 30px; margin-left: 30px">
                     <li class="nav-item">
@@ -58,7 +59,7 @@
                         <a class="nav-link text-dark w3-hover-text-orange" href="#">Tuyển dụng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark w3-hover-text-orange" href="#">Liên hệ</a>
+                        <a class="nav-link text-dark w3-hover-text-orange" href="<c:url value="/phanHoi"/>">Phản hồi</a>
                     </li>
                 </ul>
             </div>
@@ -78,7 +79,7 @@
 
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="btn btn-warning text-white" href="#"><b>ĐẶT TIỆC NGAY</b></a>
+                <a class="btn btn-warning text-white" href="<c:url value="/tieccuoi"/>"><b>ĐẶT TIỆC NGAY</b></a>
             </li>
             
             <c:if test="${pageContext.request.userPrincipal.name == null}">

@@ -4,6 +4,7 @@
  */
 package com.nhtc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -67,6 +68,7 @@ public class User implements Serializable {
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "password")
+    @JsonIgnore
     private String password;
     @Basic(optional = false)
     @NotNull
@@ -84,8 +86,10 @@ public class User implements Serializable {
     @Column(name = "userRole")
     private String userRole;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
     private Set<PhanHoi> phanHoiSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
+    @JsonIgnore
     private Set<Nhanvien> nhanvienSet;
 
     @Transient

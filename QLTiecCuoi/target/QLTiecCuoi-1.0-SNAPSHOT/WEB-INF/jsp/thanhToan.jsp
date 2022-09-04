@@ -15,10 +15,6 @@
 <div id="thanhToanTrucTiep">
     
 </div>
-
-<script src="<c:url value="/js/datTiec.js" />"></script>
-<script>
-        window.onload = function () {
-            loadThanhToan();
-        }
-</script>
+<div id="thanhToanMomo">
+    
+</div>
