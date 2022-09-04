@@ -7,7 +7,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-09-04T15:22:09")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-09-04T23:01:22")
 @StaticMetamodel(Monan.class)
 public class Monan_ { 
 
@@ -16,7 +16,7 @@ public class Monan_ {
     public static volatile SingularAttribute<Monan, Integer> id;
     public static volatile SingularAttribute<Monan, String> ten;
     public static volatile SingularAttribute<Monan, String> moTa;
-    public static volatile SingularAttribute<Monan, Float> gia;
+    public static volatile SingularAttribute<Monan, Long> gia;
     public static volatile SingularAttribute<Monan, Loaimon> idThucDon;
 
 }

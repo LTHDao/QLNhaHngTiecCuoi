@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Minh
+ * @author hdao2
  */
 @Entity
 @Table(name = "khachhang")
@@ -37,8 +39,8 @@ public class Khachhang implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idKhachHang")
     private Integer idKhachHang;
     @Basic(optional = false)
@@ -48,8 +50,9 @@ public class Khachhang implements Serializable {
     private String tenKH;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 10)
     @Column(name = "sdt")
-    private int sdt;
+    private String sdt;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
@@ -66,7 +69,7 @@ public class Khachhang implements Serializable {
         this.idKhachHang = idKhachHang;
     }
 
-    public Khachhang(Integer idKhachHang, String tenKH, int sdt, String email) {
+    public Khachhang(Integer idKhachHang, String tenKH, String sdt, String email) {
         this.idKhachHang = idKhachHang;
         this.tenKH = tenKH;
         this.sdt = sdt;
@@ -89,11 +92,11 @@ public class Khachhang implements Serializable {
         this.tenKH = tenKH;
     }
 
-    public int getSdt() {
+    public String getSdt() {
         return sdt;
     }
 
-    public void setSdt(int sdt) {
+    public void setSdt(String sdt) {
         this.sdt = sdt;
     }
 

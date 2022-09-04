@@ -57,5 +57,29 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content" 
                        value="/WEB-INF/jsp/qlsanhcuoi.jsp" />
     </definition>
-    
+    <definition name="thongKeMatDo" extends="baseLayout">
+        <put-attribute name="title" value="Thống kê" />
+        <put-attribute name="content" 
+                       value="/WEB-INF/jsp/thongKeMatDo.jsp" />
+    </definition>
+    <definition name="thongKeDoanhThu" extends="baseLayout">
+        <put-attribute name="title" value="Thống kê" />
+        <put-attribute name="content" 
+                       value="/WEB-INF/jsp/thongKeDoanhThu.jsp" />
+    </definition>
+    <definition name="phanHoi" extends="baseLayout">
+        <put-attribute name="title" value="Phản hồi" />
+        <put-attribute name="content" 
+                       value="/WEB-INF/jsp/phanHoi.jsp" />
+    </definition>
+    <definition name="datTiecCuoi" extends="baseLayout">
+        <put-attribute name="title" value="Đặt tiệc" />
+        <put-attribute name="content" 
+                       value="/WEB-INF/jsp/datTiecCuoi.jsp" />
+    </definition>
+    <definition name="thanhToan" extends="baseLayout">
+        <put-attribute name="title" value="Thanh toán" />
+        <put-attribute name="content" 
+                       value="/WEB-INF/jsp/thanhToan.jsp" />
+    </definition>
 </tiles-definitions>

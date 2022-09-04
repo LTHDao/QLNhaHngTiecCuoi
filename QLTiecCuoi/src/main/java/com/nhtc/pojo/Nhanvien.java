@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -20,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Minh
+ * @author hdao2
  */
 @Entity
 @Table(name = "nhanvien")
@@ -29,10 +31,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Nhanvien.findAll", query = "SELECT n FROM Nhanvien n"),
     @NamedQuery(name = "Nhanvien.findByIdNhanVien", query = "SELECT n FROM Nhanvien n WHERE n.idNhanVien = :idNhanVien"),
     @NamedQuery(name = "Nhanvien.findByHoTen", query = "SELECT n FROM Nhanvien n WHERE n.hoTen = :hoTen"),
-    @NamedQuery(name = "Nhanvien.findByNgaySinh", query = "SELECT n FROM Nhanvien n WHERE n.ngaySinh = :ngaySinh"),
     @NamedQuery(name = "Nhanvien.findBySdt", query = "SELECT n FROM Nhanvien n WHERE n.sdt = :sdt"),
     @NamedQuery(name = "Nhanvien.findByEmail", query = "SELECT n FROM Nhanvien n WHERE n.email = :email"),
-    @NamedQuery(name = "Nhanvien.findByDiaChi", query = "SELECT n FROM Nhanvien n WHERE n.diaChi = :diaChi")})
+    @NamedQuery(name = "Nhanvien.findByUserName", query = "SELECT n FROM Nhanvien n WHERE n.userName = :userName"),
+    @NamedQuery(name = "Nhanvien.findByPass", query = "SELECT n FROM Nhanvien n WHERE n.pass = :pass")})
 public class Nhanvien implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,20 +50,25 @@ public class Nhanvien implements Serializable {
     private String hoTen;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "ngaySinh")
-    private String ngaySinh;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "sdt")
     private int sdt;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 45)
     @Column(name = "email")
     private String email;
-    @Size(max = 45)
-    @Column(name = "diaChi")
-    private String diaChi;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "userName")
+    private String userName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "pass")
+    private String pass;
+    @JoinColumn(name = "userID", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User userID;
 
     public Nhanvien() {
     }
@@ -70,11 +77,12 @@ public class Nhanvien implements Serializable {
         this.idNhanVien = idNhanVien;
     }
 
-    public Nhanvien(Integer idNhanVien, String hoTen, String ngaySinh, int sdt) {
+    public Nhanvien(Integer idNhanVien, String hoTen, int sdt, String userName, String pass) {
         this.idNhanVien = idNhanVien;
         this.hoTen = hoTen;
-        this.ngaySinh = ngaySinh;
         this.sdt = sdt;
+        this.userName = userName;
+        this.pass = pass;
     }
 
     public Integer getIdNhanVien() {
@@ -93,14 +101,6 @@ public class Nhanvien implements Serializable {
         this.hoTen = hoTen;
     }
 
-    public String getNgaySinh() {
-        return ngaySinh;
-    }
-
-    public void setNgaySinh(String ngaySinh) {
-        this.ngaySinh = ngaySinh;
-    }
-
     public int getSdt() {
         return sdt;
     }
@@ -117,12 +117,28 @@ public class Nhanvien implements Serializable {
         this.email = email;
     }
 
-    public String getDiaChi() {
-        return diaChi;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public User getUserID() {
+        return userID;
+    }
+
+    public void setUserID(User userID) {
+        this.userID = userID;
     }
 
     @Override

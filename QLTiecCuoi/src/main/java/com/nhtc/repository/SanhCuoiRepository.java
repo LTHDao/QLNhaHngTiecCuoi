@@ -15,4 +15,5 @@ public interface SanhCuoiRepository {
     List<Sanhcuoi> getSanhCuoi();
     
     boolean addSanhCuoi(Sanhcuoi sanhCuoi);
+    Sanhcuoi getSanhCuoiById(int idSanh);
 }

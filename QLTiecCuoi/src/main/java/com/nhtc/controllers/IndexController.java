@@ -101,4 +101,27 @@ public class IndexController {
 
         return "thucdon";
     }   
+    
+    @GetMapping("/phanHoi")
+    public String phanHoi(Model model) {
+//        
+//        model.addAttribute("phanHoi", this.phanHoiService.getPhanHoi());
+        return "phanHoi";
+    }
+
+    @GetMapping("/tieccuoi")
+    public String datTiecCuoi(Model model) {
+        model.addAttribute("sanhCuoi", this.sanhCuoiService.getSanhCuoi());
+        model.addAttribute("loaidichvu", this.dichVuService.getLoaiDichVu());
+        model.addAttribute("dichvu", this.dichVuService.getDichVu(null, 0));
+        model.addAttribute("loaimon", this.thucDonService.getLoaiMon());
+        model.addAttribute("monan", this.thucDonService.getMonAn(null, 0));
+
+        return "datTiecCuoi";
+    }
+
+    @GetMapping("/thanhToan")
+    public String thanhToan(Model model) {
+        return "thanhToan";
+    }
 }

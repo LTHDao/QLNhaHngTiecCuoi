@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Minh
+ * @author hdao2
  */
 @Entity
 @Table(name = "dichvu")
@@ -60,7 +60,7 @@ public class Dichvu implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "giaDichVu")
-    private float giaDichVu;
+    private long giaDichVu;
     @Size(max = 150)
     @Column(name = "hinhAnh")
     private String hinhAnh;
@@ -71,7 +71,6 @@ public class Dichvu implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDichVu")
     @JsonIgnore
     private Set<Phieudatdichvu> phieudatdichvuSet;
-    
 
     @Transient
     private MultipartFile file;
@@ -83,7 +82,7 @@ public class Dichvu implements Serializable {
         this.idDichVu = idDichVu;
     }
 
-    public Dichvu(Integer idDichVu, String tenDichVu, float giaDichVu) {
+    public Dichvu(Integer idDichVu, String tenDichVu, long giaDichVu) {
         this.idDichVu = idDichVu;
         this.tenDichVu = tenDichVu;
         this.giaDichVu = giaDichVu;
@@ -113,11 +112,11 @@ public class Dichvu implements Serializable {
         this.chiTiet = chiTiet;
     }
 
-    public float getGiaDichVu() {
+    public long getGiaDichVu() {
         return giaDichVu;
     }
 
-    public void setGiaDichVu(float giaDichVu) {
+    public void setGiaDichVu(long giaDichVu) {
         this.giaDichVu = giaDichVu;
     }
 

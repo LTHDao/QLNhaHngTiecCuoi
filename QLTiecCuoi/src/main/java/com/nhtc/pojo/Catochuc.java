@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Minh
+ * @author hdao2
  */
 @Entity
 @Table(name = "catochuc")
@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Catochuc.findAll", query = "SELECT c FROM Catochuc c"),
     @NamedQuery(name = "Catochuc.findById", query = "SELECT c FROM Catochuc c WHERE c.id = :id"),
     @NamedQuery(name = "Catochuc.findByThoiGian", query = "SELECT c FROM Catochuc c WHERE c.thoiGian = :thoiGian"),
-    @NamedQuery(name = "Catochuc.findByGiaTang", query = "SELECT c FROM Catochuc c WHERE c.giaTang = :giaTang")})
+    @NamedQuery(name = "Catochuc.findByGiaTang", query = "SELECT c FROM Catochuc c WHERE c.giaTang = :giaTang"),
+    @NamedQuery(name = "Catochuc.findByLoaiNgay", query = "SELECT c FROM Catochuc c WHERE c.loaiNgay = :loaiNgay")})
 public class Catochuc implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,6 +47,9 @@ public class Catochuc implements Serializable {
     private String thoiGian;
     @Column(name = "giaTang")
     private Long giaTang;
+    @Size(max = 45)
+    @Column(name = "loai_ngay")
+    private String loaiNgay;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCaToChuc")
     private Set<Dondattiec> dondattiecSet;
 
@@ -78,6 +82,14 @@ public class Catochuc implements Serializable {
 
     public void setGiaTang(Long giaTang) {
         this.giaTang = giaTang;
+    }
+
+    public String getLoaiNgay() {
+        return loaiNgay;
+    }
+
+    public void setLoaiNgay(String loaiNgay) {
+        this.loaiNgay = loaiNgay;
     }
 
     @XmlTransient

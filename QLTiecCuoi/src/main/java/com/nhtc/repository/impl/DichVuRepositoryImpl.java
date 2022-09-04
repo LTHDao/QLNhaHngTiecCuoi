@@ -6,6 +6,7 @@ package com.nhtc.repository.impl;
 
 import com.nhtc.pojo.Dichvu;
 import com.nhtc.pojo.Loaidichvu;
+import com.nhtc.pojo.Phieudatdichvu;
 import com.nhtc.repository.DichVuRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +122,18 @@ public class DichVuRepositoryImpl implements DichVuRepository {
         return false;
     }
 
+    @Override
+    public Dichvu getDichVuById(int id) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        return s.get(Dichvu.class, id);
+    }
 
+    @Override
+    public List<Phieudatdichvu> getPhieuDatDichVu() {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Query q = s.createQuery("From Phieudatdichvu");
+
+        return q.getResultList();
+    }
 
 }

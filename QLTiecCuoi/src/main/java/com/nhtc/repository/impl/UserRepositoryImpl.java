@@ -60,4 +60,17 @@ public class UserRepositoryImpl implements UserRepository {
         return q.getResultList();
     } 
 
+    @Override
+    public User getUserByUsername(String username) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        
+        return session.get(User.class, username);
+    }
+
+    @Override
+    public User getUserById(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        
+        return session.get(User.class, id);
+    }
 }

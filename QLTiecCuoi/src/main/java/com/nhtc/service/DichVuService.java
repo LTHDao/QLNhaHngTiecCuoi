@@ -6,6 +6,7 @@ package com.nhtc.service;
 
 import com.nhtc.pojo.Dichvu;
 import com.nhtc.pojo.Loaidichvu;
+import com.nhtc.pojo.Phieudatdichvu;
 import java.util.List;
 
 /**
@@ -21,5 +22,7 @@ public interface DichVuService {
 //    Dichvu getDichvuByID(int idDichvu);
     boolean addDichVu(Dichvu dichvu);
     boolean deleteDichVu(int id);
+    Dichvu getDichVuById(int id);
+    List<Phieudatdichvu> getPhieuDatDichVu();
 
 }

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Minh
+ * @author hdao2
  */
 @Entity
 @Table(name = "monan")
@@ -52,7 +52,7 @@ public class Monan implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "gia")
-    private float gia;
+    private long gia;
     @Size(max = 300)
     @Column(name = "moTa")
     private String moTa;
@@ -72,7 +72,7 @@ public class Monan implements Serializable {
         this.id = id;
     }
 
-    public Monan(Integer id, String ten, float gia) {
+    public Monan(Integer id, String ten, long gia) {
         this.id = id;
         this.ten = ten;
         this.gia = gia;
@@ -94,11 +94,11 @@ public class Monan implements Serializable {
         this.ten = ten;
     }
 
-    public float getGia() {
+    public long getGia() {
         return gia;
     }
 
-    public void setGia(float gia) {
+    public void setGia(long gia) {
         this.gia = gia;
     }
 

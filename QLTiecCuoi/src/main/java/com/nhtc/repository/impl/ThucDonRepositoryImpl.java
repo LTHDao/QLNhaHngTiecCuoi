@@ -6,6 +6,7 @@ package com.nhtc.repository.impl;
 
 import com.nhtc.pojo.Loaimon;
 import com.nhtc.pojo.Monan;
+import com.nhtc.pojo.Phieudatmon;
 import com.nhtc.repository.ThucDonRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,15 +55,17 @@ public class ThucDonRepositoryImpl implements ThucDonRepository {
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
-                Predicate p = b.equal(root.get("idThucDon"), Integer.parseInt(params));
-                predicates.add(p);
+            Predicate p = b.equal(root.get("idThucDon"), Integer.parseInt(params));
+            predicates.add(p);
             q.where(predicates.toArray(new Predicate[]{}));
         }
         Query query = session.createQuery(q);
 
-        int max = Integer.parseInt(env.getProperty("page.size").toString());
-        query.setMaxResults(max);
-        query.setFirstResult((page - 1) * max);
+        if (page > 0) {
+            int max = Integer.parseInt(env.getProperty("page.size").toString());
+            query.setMaxResults(max);
+            query.setFirstResult((page - 1) * max);
+        }
 
         return query.getResultList();
     }
@@ -93,5 +96,19 @@ public class ThucDonRepositoryImpl implements ThucDonRepository {
         Query q = s.createQuery(cq);
         return Long.parseLong(q.getSingleResult().toString());
 
+    }
+
+    @Override
+    public Monan getMonAnById(int id) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        return s.get(Monan.class, id);
+    }
+
+    @Override
+    public List<Phieudatmon> getPhieuDatMon() {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Query q = s.createQuery("From Phieudatmon");
+
+        return q.getResultList();
     }
 }

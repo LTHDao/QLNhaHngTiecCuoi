@@ -8,6 +8,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.nhtc.pojo.Dichvu;
 import com.nhtc.pojo.Loaidichvu;
+import com.nhtc.pojo.Phieudatdichvu;
 import com.nhtc.repository.DichVuRepository;
 import com.nhtc.service.DichVuService;
 import java.io.IOException;
@@ -72,7 +73,14 @@ public class DichVuServiceImpl implements DichVuService {
         return this.dichVuRepository.deleteDichVu(id);
     }
 
+    @Override
+    public Dichvu getDichVuById(int id) {
+        return this.dichVuRepository.getDichVuById(id);
+    }
 
-   
+    @Override
+    public List<Phieudatdichvu> getPhieuDatDichVu() {
+        return this.dichVuRepository.getPhieuDatDichVu();
+    }
 
 }

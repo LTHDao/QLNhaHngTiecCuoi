@@ -46,5 +46,10 @@ public class SanhCuoiRepositoryImpl implements SanhCuoiRepository {
         return false;
     }
 
+    @Override
+    public Sanhcuoi getSanhCuoiById(int idSanh) {
+        Session s = sessionFactory.getObject().getCurrentSession();
 
+        return s.get(Sanhcuoi.class, idSanh);
+    }
 }

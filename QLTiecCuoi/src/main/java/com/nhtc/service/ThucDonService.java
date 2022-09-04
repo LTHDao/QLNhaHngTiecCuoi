@@ -6,6 +6,7 @@ package com.nhtc.service;
 
 import com.nhtc.pojo.Loaimon;
 import com.nhtc.pojo.Monan;
+import com.nhtc.pojo.Phieudatmon;
 import java.util.List;
 
 /**
@@ -17,4 +18,6 @@ public interface ThucDonService {
     Loaimon getLoaiMonByID(int loaiMonId);
     List<Monan> getMonAn(String params, int page);
     long countMonAn(String params);
+    Monan getMonAnById(int id);
+    List<Phieudatmon> getPhieuDatMon();
 }

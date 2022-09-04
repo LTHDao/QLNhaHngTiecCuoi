@@ -46,7 +46,10 @@ public class SanhCuoiServiceImpl implements SanhCuoiService {
         }
         return false;
     }
+    
+    @Override
+    public Sanhcuoi getSanhCuoiById(int idSanh) {
+        return this.sanhCuoiRepository.getSanhCuoiById(idSanh);
+    }
 
 }
-
-
