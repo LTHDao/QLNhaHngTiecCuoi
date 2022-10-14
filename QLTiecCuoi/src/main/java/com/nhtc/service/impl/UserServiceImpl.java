@@ -39,18 +39,21 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private Cloudinary cloudinary;
 
-
     @Override
     public boolean addUser(User user) {
         try {
             String pass = user.getPassword();
             user.setPassword(this.passwordEncoder.encode(pass));
-            user.setUserRole(User.USER);
-            
-            Map r = this.cloudinary.uploader().upload(user.getFile().getBytes(), 
+
+            String role = user.getUserRole();
+            if (role == null) {
+                user.setUserRole(User.USER);
+            }
+
+            Map r = this.cloudinary.uploader().upload(user.getFile().getBytes(),
                     ObjectUtils.asMap("resource_type", "auto"));
             user.setAvatar((String) r.get("secure_url"));
-            
+
             return this.userRepository.addUser(user);
         } catch (IOException ex) {
             Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,7 +81,7 @@ public class UserServiceImpl implements UserService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), auth);
 
     }
-    
+
     @Override
     public User getUserByUsername(String username) {
         return this.userRepository.getUserByUsername(username);
@@ -87,6 +90,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(int id) {
         return this.userRepository.getUserById(id);
+    }
+
+    @Override
+    public List<User> getUserByUserRole() {
+        return this.userRepository.getUserByUserRole();
+    }
+
+    @Override
+    public boolean deleteUser(int id) {
+        return this.userRepository.deleteUser(id);
+    }
+
+    @Override
+    public boolean UpdateNhanVien(User user) {
+        return this.userRepository.updateNhanVien(user);
+    }
+
+    @Override
+    public List<User> getListUser() {
+        return this.userRepository.getListUser();
     }
 
 }

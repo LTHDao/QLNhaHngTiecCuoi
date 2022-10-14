@@ -13,8 +13,10 @@
     <div style="padding-top: 15px; margin-left: 30px; margin-bottom: 15px">
         <a class="btn btn-warning text-white" href="<c:url value="/admin/qldichvu"/>">Quản Lý Dịch Vụ</a> 
         <a class="btn btn-warning text-white" href="<c:url value="/admin/qlsanhcuoi"/>">Quản Lý Sảnh Cưới</a> 
+        <a class="btn btn-warning text-white" href="<c:url value="/admin/nhanvien"/>">Quản Lý Nhân Viên</a>        
         <a class="btn btn-warning text-white" href="<c:url value="/admin/thongKeMatDo"/>">Thống kê mật độ</a> 
         <a class="btn btn-warning text-white" href="<c:url value="/admin/thongKeDoanhThu"/>">Thống kê doanh thu</a> 
+   
     </div>
 </sec:authorize>
 

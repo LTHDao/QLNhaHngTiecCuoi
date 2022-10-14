@@ -32,12 +32,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean addUser(User user) {
-        
+
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        try{
+        try {
             session.save(user);
             return true;
-        } catch  (HibernateException ex){
+        } catch (HibernateException ex) {
             System.err.println(ex.getMessage());
         }
         return false;
@@ -57,20 +57,88 @@ public class UserRepositoryImpl implements UserRepository {
             query = query.where(p);
         }
         Query q = session.createQuery(query);
+//        Session s = this.sessionFactory.getObject().getCurrentSession();
+//        Query q = s.createQuery("From User");
         return q.getResultList();
-    } 
+    }
 
     @Override
     public User getUserByUsername(String username) {
+//        Session session = this.sessionFactory.getObject().getCurrentSession();
+//
+//        return session.get(User.class, username);
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        
-        return session.get(User.class, username);
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<User> q = b.createQuery(User.class);
+        Root root = q.from(User.class);
+        q.select(root);
+
+        q.where(b.equal(root.get("username").as(String.class), username.trim()));
+
+        Query query = session.createQuery(q);
+        return (User) query.getSingleResult();
     }
 
     @Override
     public User getUserById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        
+
         return session.get(User.class, id);
+    }
+
+    @Override
+    public List<User> getUserByUserRole() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<User> q = b.createQuery(User.class);
+        Root root = q.from(User.class);
+        q.select(root);
+        String userRole = "ROLE_EMPLOYEE";
+        q.where(b.equal(root.get("userRole"), userRole));
+
+        Query query = session.createQuery(q);
+        return query.getResultList();
+    }
+
+    @Override
+    public boolean deleteUser(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            User nv = session.get(User.class, id);
+            session.delete(nv);
+            return true;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateNhanVien(User user) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            User u = session.get(User.class, user.getId());
+            u.setHoTen(user.getHoTen());
+            u.setNgaySinh(user.getNgaySinh());
+            u.setGioiTinh(user.getGioiTinh());
+            u.setDiaChi(user.getDiaChi());
+            u.setEmail(user.getEmail());
+            u.setSdt(user.getSdt());
+            u.setUserRole(user.getUserRole());
+//                u.setAvatar(user.getAvatar());
+            session.update(u);
+            return true;
+        } catch (HibernateException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public List<User> getListUser() {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Query q = s.createQuery("From User");
+        return q.getResultList();
     }
 }

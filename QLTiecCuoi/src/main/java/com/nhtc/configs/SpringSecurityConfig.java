@@ -6,6 +6,8 @@ package com.nhtc.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.nhtc.handlers.LoginSuccessHandler;
+import com.nhtc.handlers.LogoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,13 +30,20 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan(basePackages = {
     "com.nhtc.controllers",
     "com.nhtc.repository",
-    "com.nhtc.service"
+    "com.nhtc.service",
+    "com.nhtc.handlers"
 })
 
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
+
+    @Autowired
+    private LogoutHandler logoutHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -48,29 +57,42 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password");
-        http.formLogin().defaultSuccessUrl("/").failureUrl("/login?error");
+//        http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password");
+//        http.formLogin().defaultSuccessUrl("/").failureUrl("/login?error");
+//
+//        http.logout().logoutSuccessUrl("/login");
+//
+//        http.exceptionHandling().accessDeniedPage("/login?accessDenied");
+//
+//        http.authorizeRequests().antMatchers("/").permitAll()
+//                .antMatchers("/admin/**")
+//                .access("hasRole('ROLE_ADMIN')");
+//
+//        http.csrf().disable();
+        http.formLogin().loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password");
 
-        http.logout().logoutSuccessUrl("/login");
+        http.formLogin().successHandler(loginSuccessHandler);
+
+        http.logout().logoutSuccessHandler(logoutHandler);
 
         http.exceptionHandling().accessDeniedPage("/login?accessDenied");
 
         http.authorizeRequests().antMatchers("/").permitAll()
-                .antMatchers("/admin/**")
-                .access("hasRole('ROLE_ADMIN')");
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
 
         http.csrf().disable();
     }
-    
-        @Bean
+
+    @Bean
     public Cloudinary cloudinary() {
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-            "cloud_name", "drnm5kirb",
-            "api_key", "663812597625436",
-            "api_secret", "ame8Vh_RquDVE50SBsw3Kes-CJ8",
-            "secure", true));
+                "cloud_name", "drnm5kirb",
+                "api_key", "663812597625436",
+                "api_secret", "ame8Vh_RquDVE50SBsw3Kes-CJ8",
+                "secure", true));
         return cloudinary;
     }
-
 
 }

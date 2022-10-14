@@ -4,6 +4,19 @@
  */
 
 
+function deleteSanhCuoi(endpoint, idSanhCuoi) {
+    let d = document.getElementById("load" +idSanhCuoi);
+    d.style.display = "block";
+     fetch(endpoint, {
+        method: "delete"
+    }).then(function(res) {
+        if (res.status === 204)
+            location.reload();
+    }).catch(function(err) {
+        console.error(err);
+    });
+}
+
 function loadAdminSanhCuoi(endpoint) {
     fetch(endpoint).then(function (res) {
         return res.json();
@@ -21,7 +34,7 @@ function loadAdminSanhCuoi(endpoint) {
                 <td>${data[i].soLuongBan}</td>
                 <td><img src="${data[i].hinhAnh}" width="120" /></td>
                 <td>
-                    <button class="btn btn-danger" >Xoa</button>
+                    <button class="btn btn-danger" onclick="deleteSanhCuoi('${endpoint + "/" + data[i].idSanhCuoi}', ${data[i].idSanhCuoi})">Xoa</button>
                 </td>
             </tr>
             `

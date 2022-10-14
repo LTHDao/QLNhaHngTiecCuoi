@@ -4,11 +4,11 @@
  */
 package com.nhtc.controllers;
 
-import com.nhtc.pojo.Dichvu;
 import com.nhtc.pojo.User;
-import com.nhtc.service.DichVuService;
+import com.nhtc.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,37 +28,37 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class ApiDichVuController {
-
+public class ApiNhanVienController {
+ 
     @Autowired
-    private DichVuService dichVuService;
-
-    @GetMapping("/qldichvu")
-    public ResponseEntity<List<Dichvu>> getDichvu() {
-        return new ResponseEntity<>(this.dichVuService.getDichVu(null, 0), HttpStatus.OK);
+    private UserService userService;
+    
+    @GetMapping("/nhanvien")
+     public ResponseEntity<List<User>> getUsers() {
+        return new ResponseEntity<>(this.userService.getUserByUserRole(), HttpStatus.OK);
     }
-
-    @DeleteMapping("/qldichvu/{idDichVu}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "idDichVu") int id) {
-        this.dichVuService.deleteDichVu(id);
-    }
-
-    @PutMapping("/qldichvu/updateDichVu")
-    public boolean updateDichVu(@RequestBody Dichvu dichvu, HttpSession session) {
+    @PutMapping("/nhanvien/updateNhanVien")
+    public boolean updateNhanVien(@RequestBody User user, HttpSession session) {
         try {
-            this.dichVuService.updateDichVu(dichvu);           
+            this.userService.UpdateNhanVien(user);           
             return true;
         } catch (Exception ex) {
             return false;
         }
     }
-    
-    @GetMapping("/qldichvu/{idDichVu}")
-    public ResponseEntity<List<Dichvu>> getDichVuById(@PathVariable(value = "idDichVu") int id) {
-        List<Dichvu> dichvu = new ArrayList<>();
-        dichvu.add(this.dichVuService.getDichVuById(id));
+     
+    @GetMapping("/nhanvien/{id}")
+    public ResponseEntity<List<User>> getUserByID(@PathVariable(value = "id") int id) {
+        List<User> user = new ArrayList<>();
+        user.add(this.userService.getUserById(id));
 
-        return new ResponseEntity<>(dichvu, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
+     
+    @DeleteMapping("/nhanvien/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable(value = "id") int id) {
+        this.userService.deleteUser(id);
+    }
+
 }

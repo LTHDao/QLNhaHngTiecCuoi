@@ -5,15 +5,18 @@
 package com.nhtc.controllers;
 
 import com.nhtc.pojo.Dichvu;
-import com.nhtc.pojo.Nhanvien;
+
 import com.nhtc.pojo.Sanhcuoi;
+import com.nhtc.pojo.User;
 import com.nhtc.service.DichVuService;
-import com.nhtc.service.NhanVienService;
+
 import com.nhtc.service.SanhCuoiService;
 import com.nhtc.service.ThongKeService;
+import com.nhtc.service.UserService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.validation.Valid;
@@ -23,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,10 +51,11 @@ public class AdminController {
     private SanhCuoiService sanhCuoiService;
     
     @Autowired
-    private NhanVienService nhanVienService;
+    private UserService userService;
+    
     
     @GetMapping("/qldichvu")
-    public String list(Model model) {
+    public String list(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("dichvu", new Dichvu());
         return "qldichvu";
     }
@@ -60,7 +65,7 @@ public class AdminController {
             BindingResult result) {
         if (!result.hasErrors()) {
             if(this.dichVuService.addDichVu(dichvu) == true)
-                return "redirect:/";
+                return "redirect:/admin/qldichvu";
             else
                 model.addAttribute("errMsg", "Wrong!!!");
         }
@@ -68,23 +73,44 @@ public class AdminController {
         return "dichvu";
     }
     
+//    @PostMapping("/qldichvu/{idDichVu}")
+//    public String update(Model model, @PathVariable(value = "baivietId") int idDichVu){
+//        Dichvu dichvu = this.dichVuService.getDichVuById(idDichVu);
+//        model.addAttribute("dichvu", dichvu);
+//        return "baiviet_update";
+//    }
+    
+    
+    @RequestMapping("/qldichvu")
+    public String timKiem(Model model,
+            @RequestParam Map<String, String> params) {
+
+        model.addAttribute("dichvu", this.dichVuService.getDichVu(params, 1));
+
+        return "qldichvu";
+        
+    }
     
     @GetMapping("/nhanvien")
     public String listNhanVien(Model model) {
-       model.addAttribute("nhanvien", new Nhanvien());
+       model.addAttribute("nhanvien", new User());
         return "nhanvien";
     }
     
     @PostMapping("/nhanvien")
-    public String addNhanVien(Model model, @ModelAttribute(value = "nhanvien") @Valid Nhanvien nhanvien,
+    public String addNhanVien(Model model, @ModelAttribute(value = "nhanvien") @Valid User nhanvien,
             BindingResult result) {
-        if (!result.hasErrors()) {
-            if(this.nhanVienService.addNhanVien(nhanvien)== true)
-                return "redirect:/";
-            else
-                model.addAttribute("errMsg", "Wrong!!!");
+        String errMsg = "";
+        if (nhanvien.getPassword().equals(nhanvien.getConfirmPassword())) {
+            if (this.userService.addUser(nhanvien) == true) {
+                return "redirect:/admin/nhanvien";
+            } else {
+                errMsg = "Da co loi xay ra!";
+            }
+        } else {
+            errMsg = "Mat khau khong khop!";
         }
-        
+        model.addAttribute("errMsg", errMsg);
         return "nhanvien";
     }
     

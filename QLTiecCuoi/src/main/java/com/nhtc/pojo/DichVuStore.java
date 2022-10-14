@@ -4,10 +4,10 @@
  */
 package com.nhtc.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,39 +19,34 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Minh
  */
 @Entity
-@Table(name = "dichvu")
+@Table(name = "dich_vu_store")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Dichvu.findAll", query = "SELECT d FROM Dichvu d"),
-    @NamedQuery(name = "Dichvu.findByIdDichVu", query = "SELECT d FROM Dichvu d WHERE d.idDichVu = :idDichVu"),
-    @NamedQuery(name = "Dichvu.findByTenDichVu", query = "SELECT d FROM Dichvu d WHERE d.tenDichVu = :tenDichVu"),
-    @NamedQuery(name = "Dichvu.findByChiTiet", query = "SELECT d FROM Dichvu d WHERE d.chiTiet = :chiTiet"),
-    @NamedQuery(name = "Dichvu.findByGiaDichVu", query = "SELECT d FROM Dichvu d WHERE d.giaDichVu = :giaDichVu"),
-    @NamedQuery(name = "Dichvu.findByHinhAnh", query = "SELECT d FROM Dichvu d WHERE d.hinhAnh = :hinhAnh")})
-public class Dichvu implements Serializable {
-
-    @OneToMany(mappedBy = "idDichVuChinh")
-    @JsonIgnore
-    private Set<DichVuStore> dichVuStoreSet;
+    @NamedQuery(name = "DichVuStore.findAll", query = "SELECT d FROM DichVuStore d"),
+    @NamedQuery(name = "DichVuStore.findById", query = "SELECT d FROM DichVuStore d WHERE d.id = :id"),
+    @NamedQuery(name = "DichVuStore.findByTenDichVu", query = "SELECT d FROM DichVuStore d WHERE d.tenDichVu = :tenDichVu"),
+    @NamedQuery(name = "DichVuStore.findByChiTiet", query = "SELECT d FROM DichVuStore d WHERE d.chiTiet = :chiTiet"),
+    @NamedQuery(name = "DichVuStore.findByGiaDichVu", query = "SELECT d FROM DichVuStore d WHERE d.giaDichVu = :giaDichVu"),
+    @NamedQuery(name = "DichVuStore.findByHinhAnh", query = "SELECT d FROM DichVuStore d WHERE d.hinhAnh = :hinhAnh"),
+    @NamedQuery(name = "DichVuStore.findByLoaiDichVu", query = "SELECT d FROM DichVuStore d WHERE d.loaiDichVu = :loaiDichVu")})
+public class DichVuStore implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idDichVu")
-    private Integer idDichVu;
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -67,33 +62,36 @@ public class Dichvu implements Serializable {
     @Size(max = 150)
     @Column(name = "hinhAnh")
     private String hinhAnh;
-    @JoinColumn(name = "loaiDichVu", referencedColumnName = "idloaidichvu")
-    @ManyToOne(optional = false)
-    @JsonIgnore
-    private Loaidichvu loaiDichVu;
-    
-    @Transient
-    private MultipartFile file;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "loaiDichVu")
+    private int loaiDichVu;
+    @JoinColumn(name = "id_dich_vu_chinh", referencedColumnName = "idDichVu")
+    @ManyToOne
+    private Dichvu idDichVuChinh;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDichVu")
+    private Set<Phieudatdichvu> phieudatdichvuSet;
 
-    public Dichvu() {
+    public DichVuStore() {
     }
 
-    public Dichvu(Integer idDichVu) {
-        this.idDichVu = idDichVu;
+    public DichVuStore(Integer id) {
+        this.id = id;
     }
 
-    public Dichvu(Integer idDichVu, String tenDichVu, long giaDichVu) {
-        this.idDichVu = idDichVu;
+    public DichVuStore(Integer id, String tenDichVu, long giaDichVu, int loaiDichVu) {
+        this.id = id;
         this.tenDichVu = tenDichVu;
         this.giaDichVu = giaDichVu;
+        this.loaiDichVu = loaiDichVu;
     }
 
-    public Integer getIdDichVu() {
-        return idDichVu;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdDichVu(Integer idDichVu) {
-        this.idDichVu = idDichVu;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTenDichVu() {
@@ -128,29 +126,46 @@ public class Dichvu implements Serializable {
         this.hinhAnh = hinhAnh;
     }
 
-    public Loaidichvu getLoaiDichVu() {
+    public int getLoaiDichVu() {
         return loaiDichVu;
     }
 
-    public void setLoaiDichVu(Loaidichvu loaiDichVu) {
+    public void setLoaiDichVu(int loaiDichVu) {
         this.loaiDichVu = loaiDichVu;
+    }
+
+    public Dichvu getIdDichVuChinh() {
+        return idDichVuChinh;
+    }
+
+    public void setIdDichVuChinh(Dichvu idDichVuChinh) {
+        this.idDichVuChinh = idDichVuChinh;
+    }
+
+    @XmlTransient
+    public Set<Phieudatdichvu> getPhieudatdichvuSet() {
+        return phieudatdichvuSet;
+    }
+
+    public void setPhieudatdichvuSet(Set<Phieudatdichvu> phieudatdichvuSet) {
+        this.phieudatdichvuSet = phieudatdichvuSet;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idDichVu != null ? idDichVu.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Dichvu)) {
+        if (!(object instanceof DichVuStore)) {
             return false;
         }
-        Dichvu other = (Dichvu) object;
-        if ((this.idDichVu == null && other.idDichVu != null) || (this.idDichVu != null && !this.idDichVu.equals(other.idDichVu))) {
+        DichVuStore other = (DichVuStore) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -158,30 +173,7 @@ public class Dichvu implements Serializable {
 
     @Override
     public String toString() {
-        return "com.nhtc.pojo.Dichvu[ idDichVu=" + idDichVu + " ]";
-    }
-
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
-    @XmlTransient
-    public Set<DichVuStore> getDichVuStoreSet() {
-        return dichVuStoreSet;
-    }
-
-    public void setDichVuStoreSet(Set<DichVuStore> dichVuStoreSet) {
-        this.dichVuStoreSet = dichVuStoreSet;
+        return "com.nhtc.pojo.DichVuStore[ id=" + id + " ]";
     }
     
 }

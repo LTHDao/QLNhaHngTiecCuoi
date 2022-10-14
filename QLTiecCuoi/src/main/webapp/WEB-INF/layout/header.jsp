@@ -82,23 +82,37 @@
                 <a class="btn btn-warning text-white" href="<c:url value="/tieccuoi"/>"><b>ĐẶT TIỆC NGAY</b></a>
             </li>
             
-            <c:if test="${pageContext.request.userPrincipal.name == null}">
-                <li class="nav-item" style="margin: 0 5px">
-                    <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/login" />"><b>Đăng nhập</b></a>
+            <sec:authorize access="!isAuthenticated()">
+                <li class="nav-item active" style="padding-right: 10px">
+                        <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/login"/>">
+                            <i class="far fa-user"></i> Đăng nhập
+                        </a>
                 </li>
-            </c:if>
-            <c:if test="${pageContext.request.userPrincipal.name != null}">
-                <li class="nav-item" style="margin: 0 5px">
-                    <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/" />">${pageContext.request.userPrincipal.name}</a>
+                <li class="nav-item active">
+                        <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/register"/>">Đăng ký</a>
                 </li>
-                <li class="nav-item" style="margin: 0 5px">
-                    <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/logout" />">Ðang Xuat</a>
-                </li>
-            </c:if>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <li class="nav-item active" style="margin-right: 15px">
+                    <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/"/>">
+                        <c:if test="${currentUser.avatar != null}">
+                            <img style="width: 25px" src="${pageContext.session.getAttribute("currentUser").avatar}" class="rounded" />
+                        </c:if>
+                        <c:if test="${currentUser.avatar == null}">
+                            <i class="far fa-user"></i>
+                        </c:if>
 
-            <li class="nav-item" style="margin: 0 5px">
-                <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/register" />"><b>Đăng Ký</b></a>
-            </li>
+                        <sec:authentication property="principal.username"/>
+                    </a>
+                </li>
+
+                <li class="nav-item active">
+
+                        <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/logout"/>">Đăng xuất</a>
+
+                </li>
+            </sec:authorize>
+
             <li class="nav-item">
                 <a class="nav-link text-dark w3-hover-text-orange" href="#"><b>VI</b></a>
             </li>

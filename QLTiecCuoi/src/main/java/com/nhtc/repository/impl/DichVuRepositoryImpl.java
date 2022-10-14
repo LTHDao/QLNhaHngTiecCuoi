@@ -4,17 +4,20 @@
  */
 package com.nhtc.repository.impl;
 
+import com.nhtc.pojo.DichVuStore;
 import com.nhtc.pojo.Dichvu;
 import com.nhtc.pojo.Loaidichvu;
 import com.nhtc.pojo.Phieudatdichvu;
 import com.nhtc.repository.DichVuRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -52,7 +55,7 @@ public class DichVuRepositoryImpl implements DichVuRepository {
     }
 
     @Override
-    public List<Dichvu> getDichVu(String params, int page) {
+    public List<Dichvu> getDichVu(Map<String, String> params, int page) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Dichvu> q = b.createQuery(Dichvu.class);
@@ -61,9 +64,20 @@ public class DichVuRepositoryImpl implements DichVuRepository {
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
-            Predicate p = b.equal(root.get("loaiDichVu"), Integer.parseInt(params));
-            predicates.add(p);
+            String kw = params.getOrDefault("kw", "");
+            if (!kw.equals("")) {
+                Predicate p = b.like(root.get("tenDichVu").as(String.class),
+                        String.format("%%%s%%", kw));
+                predicates.add(p);
+            }
+            String loaidichvuID = params.get("loaidichvuID");
+            if (loaidichvuID != null) {
+                Predicate p = b.equal(root.get("loaiDichVu"), Integer.parseInt(loaidichvuID));
+                predicates.add(p);
+            }
+
             q.where(predicates.toArray(new Predicate[]{}));
+
         }
         Query query = session.createQuery(q);
 
@@ -100,6 +114,16 @@ public class DichVuRepositoryImpl implements DichVuRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
             session.save(dichvu);
+            DichVuStore dvs = new DichVuStore();
+            dvs.setTenDichVu(dichvu.getTenDichVu());
+            dvs.setChiTiet(dichvu.getChiTiet());
+            dvs.setGiaDichVu(dichvu.getGiaDichVu());
+            dvs.setHinhAnh(dichvu.getHinhAnh());
+            dvs.setIdDichVuChinh(dichvu);
+            dvs.setLoaiDichVu(dichvu.getLoaiDichVu().getIdloaidichvu());
+            session.save(dvs);
+
+            System.err.println("Them Thanh cong!!");
             return true;
         } catch (Exception ex) {
             System.err.println("===+THEM DICH VU+===" + ex.getMessage());
@@ -136,4 +160,76 @@ public class DichVuRepositoryImpl implements DichVuRepository {
         return q.getResultList();
     }
 
+    @Override
+    public boolean updateDichVu(Dichvu dichvu) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            Dichvu dv = session.get(Dichvu.class, dichvu.getIdDichVu());
+            dv.setTenDichVu(dichvu.getTenDichVu());
+            dv.setChiTiet(dichvu.getChiTiet());
+            dv.setGiaDichVu(dichvu.getGiaDichVu());
+
+
+            session.update(dv);
+            
+//            DichVuStore dvs = new DichVuStore();
+//            dvs.setTenDichVu(dichvu.getTenDichVu());
+//            dvs.setChiTiet(dichvu.getChiTiet());
+//            dvs.setGiaDichVu(dichvu.getGiaDichVu());
+//            dvs.setHinhAnh(dichvu.getHinhAnh());
+//            dvs.setIdDichVuChinh(dichvu);
+//            dvs.setLoaiDichVu(dichvu.getLoaiDichVu().getIdloaidichvu());
+//            session.save(dvs);
+            
+            return true;
+        } catch (HibernateException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return false;
+    }
+//        Session session = this.sessionFactory.getObject().getCurrentSession();
+//        try {
+//            session.update(dichvu);
+//            return true;
+//        } catch (HibernateException ex) {
+//            System.err.println(ex.getMessage());
+//        }
+//        return false;
+//    }
+
+    @Override
+    public boolean updateDichVuStore(int idDichVu) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            List<DichVuStore> listDichVuStore = getStoreByDichVu(idDichVu);
+            for (DichVuStore dichVuStore : listDichVuStore) {
+                dichVuStore.setIdDichVuChinh(null);
+                session.update(dichVuStore);
+            }
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public List<DichVuStore> getStoreByDichVu(int idDichVu) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<DichVuStore> q = b.createQuery(DichVuStore.class);
+        Root rootS = q.from(DichVuStore.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        Predicate p = b.equal(rootS.get("idDichVuChinh"), idDichVu);
+        predicates.add(p);
+        q.where(predicates.toArray(new Predicate[]{}));
+        q.orderBy(b.desc(rootS.get("id")));
+
+        q.select(rootS);
+
+        Query query = session.createQuery(q);
+
+        return query.getResultList();
+    }
 }

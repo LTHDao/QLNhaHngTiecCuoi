@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SanhCuoiRepositoryImpl implements SanhCuoiRepository {
 
     @Autowired
-    LocalSessionFactoryBean sessionFactory;
+    private LocalSessionFactoryBean sessionFactory;
 
     @Override
     public List<Sanhcuoi> getSanhCuoi() {
@@ -51,5 +51,19 @@ public class SanhCuoiRepositoryImpl implements SanhCuoiRepository {
         Session s = sessionFactory.getObject().getCurrentSession();
 
         return s.get(Sanhcuoi.class, idSanh);
+    }
+
+    @Override
+    public boolean deleteSanhCuoi(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            Sanhcuoi sc = session.get(Sanhcuoi.class, id);
+            session.delete(sc);
+            return true;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return false;
     }
 }

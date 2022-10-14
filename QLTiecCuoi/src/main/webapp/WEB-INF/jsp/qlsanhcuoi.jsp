@@ -19,6 +19,9 @@
     </div>
 </c:if>
 
+
+
+
 <div class ="container">
     <form:form method="post" action="${action}" modelAttribute="sanhCuoi" enctype="multipart/form-data">
             
@@ -66,6 +69,7 @@
         </tbody>
     </table>
 
+    
     <script src="<c:url value="/js/sanhcuoi.js" />"></script>
     <script>
         <c:url value="/api/qlsanhcuoi" var="endpoint" />

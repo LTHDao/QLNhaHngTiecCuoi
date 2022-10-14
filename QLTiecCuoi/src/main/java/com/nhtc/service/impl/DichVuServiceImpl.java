@@ -6,6 +6,7 @@ package com.nhtc.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.nhtc.pojo.DichVuStore;
 import com.nhtc.pojo.Dichvu;
 import com.nhtc.pojo.Loaidichvu;
 import com.nhtc.pojo.Phieudatdichvu;
@@ -41,7 +42,7 @@ public class DichVuServiceImpl implements DichVuService {
     }
 
     @Override
-    public List<Dichvu> getDichVu(String params, int page) {
+    public List<Dichvu> getDichVu(Map<String, String> params, int page) {
         return this.dichVuRepository.getDichVu(params, page);
     }
 
@@ -83,4 +84,18 @@ public class DichVuServiceImpl implements DichVuService {
         return this.dichVuRepository.getPhieuDatDichVu();
     }
 
+    @Override
+    public boolean updateDichVu(Dichvu dichvu) {
+        return this.dichVuRepository.updateDichVu(dichvu);
+    }
+
+    @Override
+    public boolean updateDichVuStore(int idDichVu) {
+        return this.dichVuRepository.updateDichVuStore(idDichVu);
+    }
+
+    @Override
+    public List<DichVuStore> getStoreByDichVu(int idDichVu) {
+        return this.dichVuRepository.getStoreByDichVu(idDichVu);
+    }
 }

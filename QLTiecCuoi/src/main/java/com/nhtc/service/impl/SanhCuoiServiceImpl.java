@@ -52,4 +52,9 @@ public class SanhCuoiServiceImpl implements SanhCuoiService {
         return this.sanhCuoiRepository.getSanhCuoiById(idSanh);
     }
 
+    @Override
+    public boolean deleteSanhCuoi(int id) {
+        return this.sanhCuoiRepository.deleteSanhCuoi(id);
+    }
+
 }

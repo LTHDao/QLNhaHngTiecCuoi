@@ -46,7 +46,7 @@ public class IndexController {
     
     @RequestMapping("/")
     public String index(Model model,
-            @RequestParam(value = "kw", defaultValue = "") String kw) {
+            @RequestParam(value = "kw", required = false, defaultValue = "") String kw) {
 
 //        List<String> menu = new ArrayList<>();
 //        menu.add("Trang chủ");
@@ -54,7 +54,7 @@ public class IndexController {
 //        menu.add("Dịch vụ");
 //        menu.add("Thực đơn");
 //        model.addAttribute("menu", menu);
-
+        model.addAttribute("sanhcuoi", this.sanhCuoiService.getSanhCuoi());
 
         return "index";
         
@@ -79,7 +79,7 @@ public class IndexController {
         String loaiDichVuId = params.getOrDefault("loaidichvuID", null);
         
         model.addAttribute("loaidichvu", this.dichVuService.getLoaiDichVu());
-        model.addAttribute("dichvu", this.dichVuService.getDichVu(loaiDichVuId,page));
+        model.addAttribute("dichvu", this.dichVuService.getDichVu(params,page));
         model.addAttribute("counter", this.dichVuService.countDichVu(loaiDichVuId));
         model.addAttribute("pageSize", env.getProperty("page.size"));
         model.addAttribute("loaiDichVuId", loaiDichVuId);

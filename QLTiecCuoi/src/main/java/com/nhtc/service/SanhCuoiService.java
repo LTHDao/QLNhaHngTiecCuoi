@@ -16,4 +16,5 @@ public interface SanhCuoiService {
     
     boolean addSanhCuoi(Sanhcuoi sanhCuoi);
     Sanhcuoi getSanhCuoiById(int idSanh);
+    boolean deleteSanhCuoi(int id);
 }

@@ -4,7 +4,6 @@
  */
 package com.nhtc.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -14,46 +13,41 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Minh
  */
 @Entity
-@Table(name = "sanhcuoi")
+@Table(name = "sanh_cuoi_store")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Sanhcuoi.findAll", query = "SELECT s FROM Sanhcuoi s"),
-    @NamedQuery(name = "Sanhcuoi.findByIdSanhCuoi", query = "SELECT s FROM Sanhcuoi s WHERE s.idSanhCuoi = :idSanhCuoi"),
-    @NamedQuery(name = "Sanhcuoi.findByTenSanh", query = "SELECT s FROM Sanhcuoi s WHERE s.tenSanh = :tenSanh"),
-    @NamedQuery(name = "Sanhcuoi.findByGiaToiThieu", query = "SELECT s FROM Sanhcuoi s WHERE s.giaToiThieu = :giaToiThieu"),
-    @NamedQuery(name = "Sanhcuoi.findByMoTa", query = "SELECT s FROM Sanhcuoi s WHERE s.moTa = :moTa"),
-    @NamedQuery(name = "Sanhcuoi.findByDienTich", query = "SELECT s FROM Sanhcuoi s WHERE s.dienTich = :dienTich"),
-    @NamedQuery(name = "Sanhcuoi.findBySoLuongBan", query = "SELECT s FROM Sanhcuoi s WHERE s.soLuongBan = :soLuongBan"),
-    @NamedQuery(name = "Sanhcuoi.findByHinhAnh", query = "SELECT s FROM Sanhcuoi s WHERE s.hinhAnh = :hinhAnh")})
-public class Sanhcuoi implements Serializable {
-
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSanh")
-    @JsonIgnore
-    private Set<Dondattiec> dondattiecSet;
+    @NamedQuery(name = "SanhCuoiStore.findAll", query = "SELECT s FROM SanhCuoiStore s"),
+    @NamedQuery(name = "SanhCuoiStore.findById", query = "SELECT s FROM SanhCuoiStore s WHERE s.id = :id"),
+    @NamedQuery(name = "SanhCuoiStore.findByTenSanh", query = "SELECT s FROM SanhCuoiStore s WHERE s.tenSanh = :tenSanh"),
+    @NamedQuery(name = "SanhCuoiStore.findByGiaToiThieu", query = "SELECT s FROM SanhCuoiStore s WHERE s.giaToiThieu = :giaToiThieu"),
+    @NamedQuery(name = "SanhCuoiStore.findByMoTa", query = "SELECT s FROM SanhCuoiStore s WHERE s.moTa = :moTa"),
+    @NamedQuery(name = "SanhCuoiStore.findByDienTich", query = "SELECT s FROM SanhCuoiStore s WHERE s.dienTich = :dienTich"),
+    @NamedQuery(name = "SanhCuoiStore.findBySoLuongBan", query = "SELECT s FROM SanhCuoiStore s WHERE s.soLuongBan = :soLuongBan"),
+    @NamedQuery(name = "SanhCuoiStore.findByHinhAnh", query = "SELECT s FROM SanhCuoiStore s WHERE s.hinhAnh = :hinhAnh")})
+public class SanhCuoiStore implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idSanhCuoi")
-    private Integer idSanhCuoi;
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -81,23 +75,21 @@ public class Sanhcuoi implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "hinhAnh")
     private String hinhAnh;
-    
-    @OneToMany(mappedBy = "idSanhChinh")
-    @JsonIgnore
-    private Set<SanhCuoiStore> sanhCuoiStoreSet;
-    
-    @Transient
-    private MultipartFile file;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSanh")
+    private Set<Dondattiec> dondattiecSet;
+    @JoinColumn(name = "id_sanh_chinh", referencedColumnName = "idSanhCuoi")
+    @ManyToOne
+    private Sanhcuoi idSanhChinh;
 
-    public Sanhcuoi() {
+    public SanhCuoiStore() {
     }
 
-    public Sanhcuoi(Integer idSanhCuoi) {
-        this.idSanhCuoi = idSanhCuoi;
+    public SanhCuoiStore(Integer id) {
+        this.id = id;
     }
 
-    public Sanhcuoi(Integer idSanhCuoi, String tenSanh, long giaToiThieu, String moTa, double dienTich, int soLuongBan, String hinhAnh) {
-        this.idSanhCuoi = idSanhCuoi;
+    public SanhCuoiStore(Integer id, String tenSanh, long giaToiThieu, String moTa, double dienTich, int soLuongBan, String hinhAnh) {
+        this.id = id;
         this.tenSanh = tenSanh;
         this.giaToiThieu = giaToiThieu;
         this.moTa = moTa;
@@ -106,12 +98,12 @@ public class Sanhcuoi implements Serializable {
         this.hinhAnh = hinhAnh;
     }
 
-    public Integer getIdSanhCuoi() {
-        return idSanhCuoi;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdSanhCuoi(Integer idSanhCuoi) {
-        this.idSanhCuoi = idSanhCuoi;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTenSanh() {
@@ -162,45 +154,6 @@ public class Sanhcuoi implements Serializable {
         this.hinhAnh = hinhAnh;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idSanhCuoi != null ? idSanhCuoi.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Sanhcuoi)) {
-            return false;
-        }
-        Sanhcuoi other = (Sanhcuoi) object;
-        if ((this.idSanhCuoi == null && other.idSanhCuoi != null) || (this.idSanhCuoi != null && !this.idSanhCuoi.equals(other.idSanhCuoi))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.nhtc.pojo.Sanhcuoi[ idSanhCuoi=" + idSanhCuoi + " ]";
-    }
-
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
     @XmlTransient
     public Set<Dondattiec> getDondattiecSet() {
         return dondattiecSet;
@@ -210,13 +163,37 @@ public class Sanhcuoi implements Serializable {
         this.dondattiecSet = dondattiecSet;
     }
 
-    @XmlTransient
-    public Set<SanhCuoiStore> getSanhCuoiStoreSet() {
-        return sanhCuoiStoreSet;
+    public Sanhcuoi getIdSanhChinh() {
+        return idSanhChinh;
     }
 
-    public void setSanhCuoiStoreSet(Set<SanhCuoiStore> sanhCuoiStoreSet) {
-        this.sanhCuoiStoreSet = sanhCuoiStoreSet;
+    public void setIdSanhChinh(Sanhcuoi idSanhChinh) {
+        this.idSanhChinh = idSanhChinh;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SanhCuoiStore)) {
+            return false;
+        }
+        SanhCuoiStore other = (SanhCuoiStore) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.nhtc.pojo.SanhCuoiStore[ id=" + id + " ]";
     }
     
 }

@@ -18,6 +18,8 @@
     <class>com.nhtc.pojo.User</class>
     <class>com.nhtc.pojo.Nhanvien</class>
     <class>com.nhtc.pojo.PhanHoi</class>
+    <class>com.nhtc.pojo.DichVuStore</class>
+    <class>com.nhtc.pojo.SanhCuoiStore</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/nhahangtieccuoi?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

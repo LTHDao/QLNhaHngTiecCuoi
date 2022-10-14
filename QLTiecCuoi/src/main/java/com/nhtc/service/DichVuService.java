@@ -4,10 +4,12 @@
  */
 package com.nhtc.service;
 
+import com.nhtc.pojo.DichVuStore;
 import com.nhtc.pojo.Dichvu;
 import com.nhtc.pojo.Loaidichvu;
 import com.nhtc.pojo.Phieudatdichvu;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,12 +18,15 @@ import java.util.List;
 public interface DichVuService {
     List<Loaidichvu> getLoaiDichVu();
     Loaidichvu getLoaiDichVuByID(int loaiDichVuID);
-    List<Dichvu> getDichVu(String params, int page);
+    List<Dichvu> getDichVu(Map<String, String> params, int page);
     long countDichVu(String params);
+    boolean updateDichVuStore(int idDichVu);
+    List<DichVuStore> getStoreByDichVu(int idDichVu);
     
 //    Dichvu getDichvuByID(int idDichvu);
     boolean addDichVu(Dichvu dichvu);
     boolean deleteDichVu(int id);
+    boolean updateDichVu(Dichvu dichvu);
     Dichvu getDichVuById(int id);
     List<Phieudatdichvu> getPhieuDatDichVu();
 
