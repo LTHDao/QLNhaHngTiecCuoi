@@ -98,6 +98,7 @@ function loadAdminNhanvien(endpoint) {
                 <td>${data[i].sdt}</td>
                 <td>${data[i].email}</td>
                 <td>${data[i].userRole}</td>
+
                 <td>
                     <div class="spinner-border text-info" style="display:none" id="load${data[i].id}"></div>
                     <button class="btn btn-primary" onclick="loadUpdateNhanVien('${endpoint + "/" + data[i].id}', ${data[i].id})" data-bs-toggle="modal" data-bs-target="#myModalUpdateNhanVien">

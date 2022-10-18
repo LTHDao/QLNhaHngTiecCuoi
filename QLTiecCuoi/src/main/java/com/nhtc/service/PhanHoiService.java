@@ -5,6 +5,7 @@
 package com.nhtc.service;
 
 import com.nhtc.pojo.PhanHoi;
+import com.nhtc.pojo.User;
 import java.util.List;
 
 /**
@@ -13,5 +14,5 @@ import java.util.List;
  */
 public interface PhanHoiService {
     List<PhanHoi> getPhanHoi();
-    PhanHoi addPhanHoi(String noiDung);
+    PhanHoi addPhanHoi(String noiDung, User user);
 }

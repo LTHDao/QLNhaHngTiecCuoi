@@ -5,6 +5,7 @@
 package com.nhtc.service.impl;
 
 import com.nhtc.pojo.PhanHoi;
+import com.nhtc.pojo.User;
 import com.nhtc.repository.PhanHoiRepository;
 import com.nhtc.service.PhanHoiService;
 import java.util.List;
@@ -26,8 +27,8 @@ public class PhanHoiServiceImpl implements PhanHoiService {
     }
 
     @Override
-    public PhanHoi addPhanHoi(String noiDung) {
-        return this.phanHoiRepository.addPhanHoi(noiDung);
+    public PhanHoi addPhanHoi(String noiDung, User user) {
+        return this.phanHoiRepository.addPhanHoi(noiDung, user);
     }
     
 }

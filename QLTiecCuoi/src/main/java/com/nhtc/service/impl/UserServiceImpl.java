@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean UpdateNhanVien(User user) {
+    public boolean updateNhanVien(User user) {
         return this.userRepository.updateNhanVien(user);
     }
 
@@ -111,5 +111,4 @@ public class UserServiceImpl implements UserService {
     public List<User> getListUser() {
         return this.userRepository.getListUser();
     }
-
 }

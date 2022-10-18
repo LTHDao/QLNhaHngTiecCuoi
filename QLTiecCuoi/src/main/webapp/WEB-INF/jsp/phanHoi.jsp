@@ -9,9 +9,9 @@
 <div class="container">
     <c:url value="/api/phanhoi" var="endpoint" />
     <h3 class="text-center" style="padding: 10px">Khách hàng phản hồi</h3>
-
+    <div id="alert-not-login"></div>
     <div class="form-group">
-        <textarea class="form-control" id="comment" placeholder="Noi dung comment"></textarea>
+        <textarea maxlength="300" minlength="1" class="form-control" id="comment" placeholder="Noi dung comment"></textarea>
     </div>
     <input type="button" onclick="addPhanHoi('${endpoint}')" value="Binh luan" class="btn btn-danger" />
 

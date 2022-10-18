@@ -6,7 +6,7 @@ package com.nhtc.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.nhtc.handlers.LoginSuccessHandler;
+import com.nhtc.handlers.LoginHandler;
 import com.nhtc.handlers.LogoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -39,12 +39,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
-
-    @Autowired
-    private LogoutHandler logoutHandler;
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -54,26 +48,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder()); //bam mat khau
     }
+    
+    @Autowired
+    private LoginHandler loginHandler;
+
+    @Autowired
+    private LogoutHandler logoutHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password");
-//        http.formLogin().defaultSuccessUrl("/").failureUrl("/login?error");
-//
-//        http.logout().logoutSuccessUrl("/login");
-//
-//        http.exceptionHandling().accessDeniedPage("/login?accessDenied");
-//
-//        http.authorizeRequests().antMatchers("/").permitAll()
-//                .antMatchers("/admin/**")
-//                .access("hasRole('ROLE_ADMIN')");
-//
-//        http.csrf().disable();
-        http.formLogin().loginPage("/login")
-                .usernameParameter("username")
-                .passwordParameter("password");
+        http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password");
+        http.formLogin().defaultSuccessUrl("/").failureUrl("/login?error");
 
-        http.formLogin().successHandler(loginSuccessHandler);
+        http.formLogin().successHandler(loginHandler);
 
         http.logout().logoutSuccessHandler(logoutHandler);
 
@@ -84,15 +71,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
     }
-
-    @Bean
+    
+        @Bean
     public Cloudinary cloudinary() {
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "drnm5kirb",
-                "api_key", "663812597625436",
-                "api_secret", "ame8Vh_RquDVE50SBsw3Kes-CJ8",
-                "secure", true));
+            "cloud_name", "drnm5kirb",
+            "api_key", "663812597625436",
+            "api_secret", "ame8Vh_RquDVE50SBsw3Kes-CJ8",
+            "secure", true));
         return cloudinary;
     }
+
 
 }

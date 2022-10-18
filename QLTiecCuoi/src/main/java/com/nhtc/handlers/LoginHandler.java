@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @author Minh
  */
 @Component
-public class LoginSuccessHandler implements AuthenticationSuccessHandler{
+public class LoginHandler implements AuthenticationSuccessHandler{
 
     @Autowired
     private UserService userService;

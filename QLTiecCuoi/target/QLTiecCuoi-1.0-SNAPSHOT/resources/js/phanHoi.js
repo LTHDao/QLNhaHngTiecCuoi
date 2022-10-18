@@ -4,7 +4,7 @@
  */
 
 function loadPhanHoi(endpoint) {
-    fetch(endpoint).then(function(res) {
+    fetch(endpoint).then(function (res) {
         return res.json();
     }).then(function (data) {
         let h = '';
@@ -13,23 +13,25 @@ function loadPhanHoi(endpoint) {
                 <li class="list-group-item list-group-item-action">
                     <img style="width: 3%; border-radius: 30px; margin-right: 30px; float: left" src="${d.user.avatar}" />
 
-                    <span style="display: block; font-size: 17px"><b>${d.user.username}</b></span>
+                    <span style="display: block; font-size: 17px"><b>${d.user.hoTen}</b></span>
                     <span style="font-size: 15px">${d.noiDung}</span>
                     <em style="font-size: 13px; margin-left:10px">. ${moment(d.ngayPhanHoi).locale("vi").fromNow()}</em>
                 </li>
             `
         }
-        
+
         let c = document.getElementById("dsPhanHoi");
         c.innerHTML = h;
     });
 }
 
 function addPhanHoi(endpoint) {
+    var comment = document.getElementById("comment").value
+
     fetch(endpoint, {
         method: "POST",
         body: JSON.stringify({
-            "noiDung":document.getElementById("comment").value
+            "noiDung": comment
         }),
         headers: {
             "Content-Type": "application/json"
@@ -48,5 +50,23 @@ function addPhanHoi(endpoint) {
             `
         d.insertAdjacentHTML("beforebegin", h);
         console.info(data);
-    })
+    }).catch(function (err) {
+        console.error(err);
+        if (comment === "") {
+            var h = `
+                <div class="alert alert-danger">
+                    Hãy viết gì đó!
+                </div>
+            `
+        } else {
+            var h = `
+                <div class="alert alert-danger">
+                    Bạn chưa đăng nhập! Hãy đăng nhập để gửi phản hồi!
+                </div>
+            `
+
+        }
+        let c = document.getElementById("alert-not-login");
+        c.innerHTML = h;
+    });
 }

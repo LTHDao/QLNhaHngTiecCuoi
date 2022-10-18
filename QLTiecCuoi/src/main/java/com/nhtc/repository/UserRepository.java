@@ -20,5 +20,4 @@ public interface UserRepository {
     User getUserById(int id);
     List<User> getUserByUserRole();
     boolean updateNhanVien(User user);
-    
 }

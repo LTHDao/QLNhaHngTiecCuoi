@@ -4,6 +4,7 @@
  */
 package com.nhtc.controllers;
 
+import com.nhtc.pojo.DichVuStore;
 import com.nhtc.pojo.Dichvu;
 import com.nhtc.pojo.Dondattiec;
 import com.nhtc.pojo.Hoadon;
@@ -12,11 +13,14 @@ import com.nhtc.pojo.Monan;
 import com.nhtc.pojo.PhanHoi;
 import com.nhtc.pojo.Phieudatdichvu;
 import com.nhtc.pojo.Phieudatmon;
+import com.nhtc.pojo.SanhCuoiStore;
 import com.nhtc.pojo.Sanhcuoi;
+import com.nhtc.pojo.User;
 import com.nhtc.service.DatTiecService;
 import com.nhtc.service.DichVuService;
 import com.nhtc.service.SanhCuoiService;
 import com.nhtc.service.ThucDonService;
+import com.nhtc.service.UserService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +56,8 @@ public class ApiDatTiecCuoiController {
     private DichVuService dichVuService;
     @Autowired
     private DatTiecService datTiecService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/khachhang")
     public ResponseEntity<List<Khachhang>> listKhachHang() {
@@ -68,15 +75,24 @@ public class ApiDatTiecCuoiController {
     public ResponseEntity<Dondattiec> addDonDatTiec(@RequestBody Map<String, String> params) {
         try {
             int idSanh = Integer.parseInt(params.get("idSanh"));
-            Sanhcuoi sanh = this.sanhCuoiService.getSanhCuoiById(idSanh);
+//            Sanhcuoi sanh = this.sanhCuoiService.getSanhCuoiById(idSanh);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-            String date = params.get("ngayToChuc");
-            Date ngayToChuc = formatter.parse(date);
-
-            Dondattiec p = this.datTiecService.addDonDatTiec(params, sanh, ngayToChuc);
+            String ngayToChuc = params.get("ngayToChuc");
+            Date ngayToChucF = formatter.parse(ngayToChuc);
             
-//            Phieudatdichvu pdv = this.datTiecService.addPhieuDv(p, dichVu);
+            String ngayDatHen = params.get("ngayDatHen");
+            Date ngayDatHenF = formatter.parse(ngayDatHen);
 
+            SanhCuoiStore sanhCuoiStore = null;
+            for (SanhCuoiStore s : this.sanhCuoiService.getStoreBySanh(idSanh)) {
+
+                sanhCuoiStore = s;
+                break;
+            }
+
+            Dondattiec p = this.datTiecService.addDonDatTiec(params, sanhCuoiStore, ngayToChucF, ngayDatHenF);
+
+//            Phieudatdichvu pdv = this.datTiecService.addPhieuDv(p, dichVu);
             return new ResponseEntity<>(p, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,7 +100,7 @@ public class ApiDatTiecCuoiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
-    
+
     @GetMapping("/phieudatdichvu")
     public ResponseEntity<List<Phieudatdichvu>> listPhieuDatDichVu() {
         return new ResponseEntity<>(this.dichVuService.getPhieuDatDichVu(), HttpStatus.OK);
@@ -97,12 +113,19 @@ public class ApiDatTiecCuoiController {
         try {
             int idDon = Integer.parseInt(params.get("idDonDatTiec"));
             Dondattiec donDatTiec = this.datTiecService.getDonDatTiecById(idDon);
-            
+
             int idDichVu = Integer.parseInt(params.get("idDichVu"));
-            Dichvu dichVu = this.dichVuService.getDichVuById(idDichVu);
+//            Dichvu dichVu = this.dichVuService.getDichVuById(idDichVu);;
+            DichVuStore divhVuStore = null;
+            for (DichVuStore dv : this.dichVuService.getStoreByDichvu(idDichVu)) {
+                divhVuStore = dv;
+                break;
+            }
             
-            Phieudatdichvu pdv = this.datTiecService.addPhieuDv(donDatTiec, dichVu);
-            
+            System.out.println("hong" + divhVuStore.getTenDichVu());
+
+            Phieudatdichvu pdv = this.datTiecService.addPhieuDv(donDatTiec, divhVuStore);
+
             return new ResponseEntity<>(pdv, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,12 +133,12 @@ public class ApiDatTiecCuoiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
-    
+
     @GetMapping("/phieudatmon")
     public ResponseEntity<List<Phieudatmon>> listPhieuDatMon() {
         return new ResponseEntity<>(this.thucDonService.getPhieuDatMon(), HttpStatus.OK);
     }
-    
+
     @PostMapping(path = "/phieudatmon", produces = {
         MediaType.APPLICATION_JSON_VALUE
     })
@@ -123,24 +146,24 @@ public class ApiDatTiecCuoiController {
         try {
             int idDon = Integer.parseInt(params.get("idDonDatTiec"));
             Dondattiec donDatTiec = this.datTiecService.getDonDatTiecById(idDon);
-            
+
             int idMonAn = Integer.parseInt(params.get("idMonAn"));
             Monan monAn = this.thucDonService.getMonAnById(idMonAn);
-            
+
             Phieudatmon pdm = this.datTiecService.addPhieuDatMon(donDatTiec, monAn);
-            
+
             return new ResponseEntity<>(pdm, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @GetMapping("/hoadon")
     public ResponseEntity<List<Hoadon>> listHoaDon() {
         return new ResponseEntity<>(this.datTiecService.getHoaDon(), HttpStatus.OK);
     }
-    
+
     @PostMapping(path = "/hoadon", produces = {
         MediaType.APPLICATION_JSON_VALUE
     })
@@ -149,7 +172,7 @@ public class ApiDatTiecCuoiController {
             int idDon = Integer.parseInt(params.get("idDonDatTiec"));
             Dondattiec donDatTiec = this.datTiecService.getDonDatTiecById(idDon);
             long tongGia = Long.parseLong(params.get("tongGia"));
-            
+
             Hoadon hd = this.datTiecService.addHoaDon(donDatTiec, tongGia);
             return new ResponseEntity<>(hd, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -157,5 +180,12 @@ public class ApiDatTiecCuoiController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
+    @GetMapping("/hoadon/{id}")
+    public ResponseEntity<List<Hoadon>> getHoaDonByID(@PathVariable(value = "id") int id) {
+        List<Hoadon> d = new ArrayList<>();
+        d.add(this.datTiecService.getHoaDonById(id));
+
+        return new ResponseEntity<>(d, HttpStatus.OK);
+    }
 }

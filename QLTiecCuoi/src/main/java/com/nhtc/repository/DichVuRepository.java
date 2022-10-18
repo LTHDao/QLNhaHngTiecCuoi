@@ -20,8 +20,8 @@ public interface DichVuRepository {
     Loaidichvu getLoaiDichVuByID(int loaiDichVuID);
     List<Dichvu> getDichVu(Map<String, String> params, int page);
     boolean updateDichVuStore(int idDichVu);
-    List<DichVuStore> getStoreByDichVu(int idDichVu);
-
+    List<DichVuStore> getStoreByDichvu(int dichvu);
+    
     long countDichVu(String params);
 
     boolean addDichVu(Dichvu dichvu);
@@ -29,4 +29,7 @@ public interface DichVuRepository {
     boolean deleteDichVu(int id);
     Dichvu getDichVuById(int id);
     List<Phieudatdichvu> getPhieuDatDichVu();
+    
+    
+    DichVuStore getDichVuStoreByID(int id);
 }

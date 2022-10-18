@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Minh
+ * @author hdao2
  */
 @Entity
 @Table(name = "sanhcuoi")
@@ -42,11 +42,6 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Sanhcuoi.findBySoLuongBan", query = "SELECT s FROM Sanhcuoi s WHERE s.soLuongBan = :soLuongBan"),
     @NamedQuery(name = "Sanhcuoi.findByHinhAnh", query = "SELECT s FROM Sanhcuoi s WHERE s.hinhAnh = :hinhAnh")})
 public class Sanhcuoi implements Serializable {
-
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSanh")
-    @JsonIgnore
-    private Set<Dondattiec> dondattiecSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -76,16 +71,13 @@ public class Sanhcuoi implements Serializable {
     @NotNull
     @Column(name = "soLuongBan")
     private int soLuongBan;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 150)
     @Column(name = "hinhAnh")
     private String hinhAnh;
-    
-    @OneToMany(mappedBy = "idSanhChinh")
     @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSanhChinh")
     private Set<SanhCuoiStore> sanhCuoiStoreSet;
-    
+
     @Transient
     private MultipartFile file;
 
@@ -162,6 +154,15 @@ public class Sanhcuoi implements Serializable {
         this.hinhAnh = hinhAnh;
     }
 
+    @XmlTransient
+    public Set<SanhCuoiStore> getSanhCuoiStoreSet() {
+        return sanhCuoiStoreSet;
+    }
+
+    public void setSanhCuoiStoreSet(Set<SanhCuoiStore> sanhCuoiStoreSet) {
+        this.sanhCuoiStoreSet = sanhCuoiStoreSet;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -186,7 +187,7 @@ public class Sanhcuoi implements Serializable {
     public String toString() {
         return "com.nhtc.pojo.Sanhcuoi[ idSanhCuoi=" + idSanhCuoi + " ]";
     }
-
+    
     /**
      * @return the file
      */
@@ -201,22 +202,4 @@ public class Sanhcuoi implements Serializable {
         this.file = file;
     }
 
-    @XmlTransient
-    public Set<Dondattiec> getDondattiecSet() {
-        return dondattiecSet;
-    }
-
-    public void setDondattiecSet(Set<Dondattiec> dondattiecSet) {
-        this.dondattiecSet = dondattiecSet;
-    }
-
-    @XmlTransient
-    public Set<SanhCuoiStore> getSanhCuoiStoreSet() {
-        return sanhCuoiStoreSet;
-    }
-
-    public void setSanhCuoiStoreSet(Set<SanhCuoiStore> sanhCuoiStoreSet) {
-        this.sanhCuoiStoreSet = sanhCuoiStoreSet;
-    }
-    
 }

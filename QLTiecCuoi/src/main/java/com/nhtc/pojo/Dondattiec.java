@@ -59,6 +59,11 @@ public class Dondattiec implements Serializable {
     private Date ngayToChuc;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "ngayDatHen")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date ngayDatHen;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "soBan")
     private int soBan;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTiecCuoi")
@@ -73,9 +78,9 @@ public class Dondattiec implements Serializable {
     @JoinColumn(name = "idKhachHang", referencedColumnName = "idKhachHang")
     @ManyToOne(optional = false)
     private Khachhang idKhachHang;
-    @JoinColumn(name = "idSanh", referencedColumnName = "idSanhCuoi")
+    @JoinColumn(name = "idSanh", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Sanhcuoi idSanh;
+    private SanhCuoiStore idSanh;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTiecCuoi")
     @JsonIgnore
     private Set<Phieudatdichvu> phieudatdichvuSet;
@@ -159,11 +164,11 @@ public class Dondattiec implements Serializable {
         this.idKhachHang = idKhachHang;
     }
 
-    public Sanhcuoi getIdSanh() {
+    public SanhCuoiStore getIdSanh() {
         return idSanh;
     }
 
-    public void setIdSanh(Sanhcuoi idSanh) {
+    public void setIdSanh(SanhCuoiStore idSanh) {
         this.idSanh = idSanh;
     }
 
@@ -199,6 +204,20 @@ public class Dondattiec implements Serializable {
     @Override
     public String toString() {
         return "com.nhtc.pojo.Dondattiec[ idDonDatTiec=" + idDonDatTiec + " ]";
+    }
+
+    /**
+     * @return the ngayDatHen
+     */
+    public Date getNgayDatHen() {
+        return ngayDatHen;
+    }
+
+    /**
+     * @param ngayDatHen the ngayDatHen to set
+     */
+    public void setNgayDatHen(Date ngayDatHen) {
+        this.ngayDatHen = ngayDatHen;
     }
     
 }

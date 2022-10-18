@@ -100,7 +100,6 @@ public class User implements Serializable {
     private String email;
     @Size(max = 200)
     @Column(name = "avatar")
-    @JsonIgnore
     private String avatar;
     @Size(max = 15)
     @Column(name = "userRole")

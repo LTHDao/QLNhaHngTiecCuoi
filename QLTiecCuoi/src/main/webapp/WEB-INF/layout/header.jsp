@@ -46,8 +46,8 @@
                 </ul>
 
                 <a class="btn btn-warning btn-lg w3-hover-text-orange w3-hover-white text-white" 
-                        style="position: absolute; bottom: 130px; margin-left: 95px"
-                        href="<c:url value="/tieccuoi"/>">
+                   style="position: absolute; bottom: 130px; margin-left: 95px"
+                   href="<c:url value="/tieccuoi"/>">
                     <b>ĐẶT TIỆC NGAY</b>
                 </a>
 
@@ -70,7 +70,7 @@
             &#9776;
         </button>
 
-        <a class="navbar-brand text-warning" href="javascript:void(0)" style="margin-left: 200px; font-size: 24px">
+        <a class="navbar-brand text-warning" href="<c:url value="/" />" style="margin-left: 200px; font-size: 24px">
             <b>Nhà hàng tiệc cưới MARRY ME</b>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -79,9 +79,9 @@
 
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="btn btn-warning text-white" href="<c:url value="/tieccuoi"/>"><b>ĐẶT TIỆC NGAY</b></a>
+                <a class="btn btn-warning w3-hover-text-orange w3-hover-white text-white" href="<c:url value="/tieccuoi"/>"><b>ĐẶT TIỆC NGAY</b></a>
             </li>
-            
+
             <sec:authorize access="!isAuthenticated()">
                 <li class="nav-item active" style="padding-right: 10px">
                         <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/login"/>">
@@ -93,16 +93,10 @@
                 </li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li class="nav-item active" style="margin-right: 15px">
+                <li class="nav-item active" style="margin-right: 15px; margin-left: 15px" >
                     <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/"/>">
-                        <c:if test="${currentUser.avatar != null}">
-                            <img style="width: 25px" src="${pageContext.session.getAttribute("currentUser").avatar}" class="rounded" />
-                        </c:if>
-                        <c:if test="${currentUser.avatar == null}">
-                            <i class="far fa-user"></i>
-                        </c:if>
-
-                        <sec:authentication property="principal.username"/>
+                        <img style="width: 25px" src="${pageContext.session.getAttribute("currentUser").avatar}" class="rounded" />
+                        ${pageContext.session.getAttribute("currentUser").hoTen}
                     </a>
                 </li>
 
@@ -112,6 +106,7 @@
 
                 </li>
             </sec:authorize>
+
 
             <li class="nav-item">
                 <a class="nav-link text-dark w3-hover-text-orange" href="#"><b>VI</b></a>

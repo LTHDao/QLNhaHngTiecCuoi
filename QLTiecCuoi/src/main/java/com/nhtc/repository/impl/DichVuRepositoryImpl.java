@@ -114,16 +114,6 @@ public class DichVuRepositoryImpl implements DichVuRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
             session.save(dichvu);
-            DichVuStore dvs = new DichVuStore();
-            dvs.setTenDichVu(dichvu.getTenDichVu());
-            dvs.setChiTiet(dichvu.getChiTiet());
-            dvs.setGiaDichVu(dichvu.getGiaDichVu());
-            dvs.setHinhAnh(dichvu.getHinhAnh());
-            dvs.setIdDichVuChinh(dichvu);
-            dvs.setLoaiDichVu(dichvu.getLoaiDichVu().getIdloaidichvu());
-            session.save(dvs);
-
-            System.err.println("Them Thanh cong!!");
             return true;
         } catch (Exception ex) {
             System.err.println("===+THEM DICH VU+===" + ex.getMessage());
@@ -145,6 +135,50 @@ public class DichVuRepositoryImpl implements DichVuRepository {
         }
         return false;
     }
+    
+    @Override
+    public boolean updateDichVu(Dichvu dichvu) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            Dichvu dv = session.get(Dichvu.class, dichvu.getIdDichVu());
+            dv.setTenDichVu(dichvu.getTenDichVu());
+            dv.setChiTiet(dichvu.getChiTiet());
+            dv.setGiaDichVu(dichvu.getGiaDichVu());
+
+
+            session.update(dv);
+            
+            DichVuStore dvs = new DichVuStore();
+            dvs.setTenDichVu(dichvu.getTenDichVu());
+            dvs.setChiTiet(dichvu.getChiTiet());
+            dvs.setGiaDichVu(dichvu.getGiaDichVu());
+            dvs.setHinhAnh(dv.getHinhAnh());
+            dvs.setIdDichVuChinh(dv);
+            dvs.setLoaiDichVu(dv.getLoaiDichVu().getIdloaidichvu());
+            session.save(dvs);
+            
+            return true;
+        } catch (HibernateException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean updateDichVuStore(int idDichVu) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            List<DichVuStore> listDichVuStore = getStoreByDichvu(idDichVu);
+            for (DichVuStore dichVuStore : listDichVuStore) {
+                dichVuStore.setIdDichVuChinh(null);
+                session.update(dichVuStore);
+            }
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
     @Override
     public Dichvu getDichVuById(int id) {
@@ -161,75 +195,29 @@ public class DichVuRepositoryImpl implements DichVuRepository {
     }
 
     @Override
-    public boolean updateDichVu(Dichvu dichvu) {
-        Session session = this.sessionFactory.getObject().getCurrentSession();
-        try {
-            Dichvu dv = session.get(Dichvu.class, dichvu.getIdDichVu());
-            dv.setTenDichVu(dichvu.getTenDichVu());
-            dv.setChiTiet(dichvu.getChiTiet());
-            dv.setGiaDichVu(dichvu.getGiaDichVu());
-
-
-            session.update(dv);
-            
-//            DichVuStore dvs = new DichVuStore();
-//            dvs.setTenDichVu(dichvu.getTenDichVu());
-//            dvs.setChiTiet(dichvu.getChiTiet());
-//            dvs.setGiaDichVu(dichvu.getGiaDichVu());
-//            dvs.setHinhAnh(dichvu.getHinhAnh());
-//            dvs.setIdDichVuChinh(dichvu);
-//            dvs.setLoaiDichVu(dichvu.getLoaiDichVu().getIdloaidichvu());
-//            session.save(dvs);
-            
-            return true;
-        } catch (HibernateException ex) {
-            System.err.println(ex.getMessage());
-        }
-        return false;
-    }
-//        Session session = this.sessionFactory.getObject().getCurrentSession();
-//        try {
-//            session.update(dichvu);
-//            return true;
-//        } catch (HibernateException ex) {
-//            System.err.println(ex.getMessage());
-//        }
-//        return false;
-//    }
-
-    @Override
-    public boolean updateDichVuStore(int idDichVu) {
-        Session session = this.sessionFactory.getObject().getCurrentSession();
-        try {
-            List<DichVuStore> listDichVuStore = getStoreByDichVu(idDichVu);
-            for (DichVuStore dichVuStore : listDichVuStore) {
-                dichVuStore.setIdDichVuChinh(null);
-                session.update(dichVuStore);
-            }
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public List<DichVuStore> getStoreByDichVu(int idDichVu) {
+    public List<DichVuStore> getStoreByDichvu(int dichvu) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<DichVuStore> q = b.createQuery(DichVuStore.class);
         Root rootS = q.from(DichVuStore.class);
 
         List<Predicate> predicates = new ArrayList<>();
-        Predicate p = b.equal(rootS.get("idDichVuChinh"), idDichVu);
+        Predicate p = b.equal(rootS.get("idDichVuChinh"), dichvu);
         predicates.add(p);
         q.where(predicates.toArray(new Predicate[]{}));
         q.orderBy(b.desc(rootS.get("id")));
 
         q.select(rootS);
-
+        
         Query query = session.createQuery(q);
-
+        
         return query.getResultList();
     }
+
+    @Override
+    public DichVuStore getDichVuStoreByID(int id) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        return s.get(DichVuStore.class, id);
+    }
+
 }

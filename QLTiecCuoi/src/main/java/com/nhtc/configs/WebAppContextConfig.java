@@ -32,7 +32,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = {
     "com.nhtc.controllers",
     "com.nhtc.repository",
-    "com.nhtc.service"
+    "com.nhtc.service",
+    
 })
 public class WebAppContextConfig implements WebMvcConfigurer {
 

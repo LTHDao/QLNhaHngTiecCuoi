@@ -18,11 +18,27 @@
     <class>com.nhtc.pojo.User</class>
     <class>com.nhtc.pojo.Nhanvien</class>
     <class>com.nhtc.pojo.PhanHoi</class>
-    <class>com.nhtc.pojo.DichVuStore</class>
     <class>com.nhtc.pojo.SanhCuoiStore</class>
+    <class>com.nhtc.pojo.DichVuStore</class>
+    <class>com.nhtc.pojo.Catochuc_1</class>
+    <class>com.nhtc.pojo.DichVuStore_1</class>
+    <class>com.nhtc.pojo.Phieudatdichvu_1</class>
+    <class>com.nhtc.pojo.PhanHoi_1</class>
+    <class>com.nhtc.pojo.Nhanvien_1</class>
+    <class>com.nhtc.pojo.Phieudatmon_1</class>
+    <class>com.nhtc.pojo.Dichvu_1</class>
+    <class>com.nhtc.pojo.Dondattiec_1</class>
+    <class>com.nhtc.pojo.SanhCuoiStore_1</class>
+    <class>com.nhtc.pojo.Monan_1</class>
+    <class>com.nhtc.pojo.Loaidichvu_1</class>
+    <class>com.nhtc.pojo.Hoadon_1</class>
+    <class>com.nhtc.pojo.User_1</class>
+    <class>com.nhtc.pojo.Khachhang_1</class>
+    <class>com.nhtc.pojo.Loaimon_1</class>
+    <class>com.nhtc.pojo.Sanhcuoi_1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/nhahangtieccuoi?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/nhahangtieccuoi2508?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="123456789"/>

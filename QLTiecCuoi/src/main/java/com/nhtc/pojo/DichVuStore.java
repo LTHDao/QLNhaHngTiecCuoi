@@ -4,6 +4,7 @@
  */
 package com.nhtc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -19,14 +20,16 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Minh
+ * @author hdao2
  */
 @Entity
 @Table(name = "dich_vu_store")
@@ -70,8 +73,12 @@ public class DichVuStore implements Serializable {
     @ManyToOne
     private Dichvu idDichVuChinh;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDichVu")
+    @JsonIgnore
     private Set<Phieudatdichvu> phieudatdichvuSet;
 
+    @Transient
+    private MultipartFile file;
+    
     public DichVuStore() {
     }
 
@@ -174,6 +181,20 @@ public class DichVuStore implements Serializable {
     @Override
     public String toString() {
         return "com.nhtc.pojo.DichVuStore[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

@@ -4,11 +4,15 @@
  */
 package com.nhtc.repository.impl;
 
+import com.nhtc.pojo.Dondattiec;
 import com.nhtc.pojo.PhanHoi;
 import com.nhtc.pojo.User;
 import com.nhtc.repository.PhanHoiRepository;
 import java.util.List;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,20 +34,25 @@ public class PhanHoiRepositoryImpl implements PhanHoiRepository {
     @Override
     public List<PhanHoi> getPhanHoi() {
         Session s = this.sessionFactory.getObject().getCurrentSession();
-        Query q = s.createQuery("From PhanHoi");
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<PhanHoi> q = b.createQuery(PhanHoi.class);
         
+        Root root = q.from(PhanHoi.class);
+        q.orderBy(b.desc(root.get("ngayPhanHoi")));
+        
+        Query query = s.createQuery(q);
 
-        return q.getResultList();
+        return query.getResultList();
     }
 
     @Override
-    public PhanHoi addPhanHoi(String noiDung) {
+    public PhanHoi addPhanHoi(String noiDung, User user) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
 
         try {
             PhanHoi p = new PhanHoi();
             p.setNoiDung(noiDung);
-            p.setUserId(s.get(User.class, 2));
+            p.setUserId(user);
 
             s.save(p);
 

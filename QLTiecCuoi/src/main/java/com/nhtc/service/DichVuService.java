@@ -19,15 +19,17 @@ public interface DichVuService {
     List<Loaidichvu> getLoaiDichVu();
     Loaidichvu getLoaiDichVuByID(int loaiDichVuID);
     List<Dichvu> getDichVu(Map<String, String> params, int page);
-    long countDichVu(String params);
     boolean updateDichVuStore(int idDichVu);
-    List<DichVuStore> getStoreByDichVu(int idDichVu);
+    List<DichVuStore> getStoreByDichvu(int dichvu);
     
-//    Dichvu getDichvuByID(int idDichvu);
+    long countDichVu(String params);
+
     boolean addDichVu(Dichvu dichvu);
-    boolean deleteDichVu(int id);
     boolean updateDichVu(Dichvu dichvu);
+    boolean deleteDichVu(int id);
     Dichvu getDichVuById(int id);
     List<Phieudatdichvu> getPhieuDatDichVu();
-
+    
+    
+    DichVuStore getDichVuStoreByID(int id);
 }

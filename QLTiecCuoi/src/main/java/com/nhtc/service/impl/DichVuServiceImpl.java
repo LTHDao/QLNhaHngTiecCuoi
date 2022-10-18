@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 public class DichVuServiceImpl implements DichVuService {
 
     @Autowired
-    private Cloudinary Cloudinary;
+    private Cloudinary cloudinary;
 
     @Autowired
     private DichVuRepository dichVuRepository;
@@ -54,7 +54,7 @@ public class DichVuServiceImpl implements DichVuService {
     @Override
     public boolean addDichVu(Dichvu dichvu) {
         try {
-            Map r = this.Cloudinary.uploader().upload(dichvu.getFile().getBytes(),
+            Map r = this.cloudinary.uploader().upload(dichvu.getFile().getBytes(),
                     ObjectUtils.asMap("resource_type", "auto"));
             dichvu.setHinhAnh((String) r.get("secure_url"));
 
@@ -85,6 +85,16 @@ public class DichVuServiceImpl implements DichVuService {
     }
 
     @Override
+    public List<DichVuStore> getStoreByDichvu(int dichvu) {
+        return this.dichVuRepository.getStoreByDichvu(dichvu);
+    }
+
+    @Override
+    public DichVuStore getDichVuStoreByID(int id) {
+        return this.dichVuRepository.getDichVuStoreByID(id);
+    }
+    
+    @Override
     public boolean updateDichVu(Dichvu dichvu) {
         return this.dichVuRepository.updateDichVu(dichvu);
     }
@@ -94,8 +104,4 @@ public class DichVuServiceImpl implements DichVuService {
         return this.dichVuRepository.updateDichVuStore(idDichVu);
     }
 
-    @Override
-    public List<DichVuStore> getStoreByDichVu(int idDichVu) {
-        return this.dichVuRepository.getStoreByDichVu(idDichVu);
-    }
 }

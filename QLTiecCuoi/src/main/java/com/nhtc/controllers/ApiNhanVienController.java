@@ -8,7 +8,6 @@ import com.nhtc.pojo.User;
 import com.nhtc.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +39,7 @@ public class ApiNhanVienController {
     @PutMapping("/nhanvien/updateNhanVien")
     public boolean updateNhanVien(@RequestBody User user, HttpSession session) {
         try {
-            this.userService.UpdateNhanVien(user);           
+            this.userService.updateNhanVien(user);           
             return true;
         } catch (Exception ex) {
             return false;

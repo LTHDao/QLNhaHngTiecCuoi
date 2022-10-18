@@ -4,6 +4,7 @@
  */
 
 var idDon = 0;
+var idHoaDon = 0;
 var tienMonAn = 0;
 var tienDichVu = 0;
 var soBan = 0;
@@ -11,7 +12,6 @@ var giaTang = 0;
 var giaSanh = 0;
 let spinnerDatTiec = document.getElementById("spinnerDatTiec");
 let btnDatTiec = document.getElementById("btnDatTiec");
-spinnerDatTiec.style.display = "none"
 function addDonDatTiec() {
     var radio = document.getElementsByName('optradio');
     var idSanh = "";
@@ -29,6 +29,7 @@ function addDonDatTiec() {
             "emailKH": document.getElementById("emailKH").value,
             "idSanh": idSanh,
             "ngayToChuc": document.getElementById("ngayToChuc").value,
+            "ngayDatHen": document.getElementById("ngayDatHen").value,
             "chitTiet": document.getElementById("chitTiet").value,
             "soBan": document.getElementById("soBan").value
         }),
@@ -38,7 +39,7 @@ function addDonDatTiec() {
     }).then(function (res) {
         return res.json();
     }).then(function (code) {
-        idDon = `${code.idDonDatTiec}`;
+        idDon = code.idDonDatTiec;
         soBan = code.soBan;
         giaTang = code.idCaToChuc.giaTang;
         giaSanh = code.idSanh.giaToiThieu;
@@ -47,7 +48,6 @@ function addDonDatTiec() {
         console.info(code);
     }).catch(function (err) {
         console.error(err);
-        alert("Lỗi");
     });
 }
 
@@ -72,7 +72,6 @@ function addPhieuDatDichVuMonAn() {
                 console.info(code);
             }).catch(function (err) {
                 console.error(err);
-                alert("Lỗi");
             });
         }
     }
@@ -97,7 +96,6 @@ function addPhieuDatDichVuMonAn() {
                 console.info(code);
             }).catch(function (err) {
                 console.error(err);
-                alert("Lỗi");
             });
         }
     }
@@ -124,37 +122,35 @@ function addHoaDon() {
         return res.json();
     }).then(function (code) {
         spinnerDatTiec.style.display = "none"
+        idHoaDon = code.idhoadon;
         console.info(code);
-        window.open("/QLTiecCuoi/thanhToan", "_self")
+        window.open("/QLTiecCuoi/thanhToan/" + idHoaDon, "_self")
     }).catch(function (err) {
         console.error(err);
-        alert("Lỗi");
     });
 }
 
-function loadThanhToan() {
-    fetch('/QLTiecCuoi/api/khachhang').then(function(res) {
-        return res.json();
-    }).then(function (data) {
-        let h = '';
-        for (let d of data) {
-//            h += `
-//                <li class="list-group-item list-group-item-action">
-//                    <img style="width: 3%; border-radius: 30px; margin-right: 30px; float: left" src="${d.user.avatar}" />
-//
-//                    <span style="display: block; font-size: 17px"><b>${d.user.username}</b></span>
-//                    <span style="font-size: 15px">${d.noiDung}</span>
-//                    <em style="font-size: 13px; margin-left:10px">. ${moment(d.ngayPhanHoi).locale("vi").fromNow()}</em>
-//                </li>
-//            `
-h+= `
-    <span>
-        ${d.tenKH}
-</span>
-`
-        }
-        
-        let c = document.getElementById("thanhToanTrucTiep");
-        c.innerHTML = h;
-    });
-}
+//function loadThanhToan() {
+//    fetch('/QLTiecCuoi/api/hoadon/' + 60).then(function(res) {
+//        return res.json();
+//    }).then(function (data) {
+//        let h;
+//        for (let d of data) {
+////            h += `
+////                <li class="list-group-item list-group-item-action">
+////                    <img style="width: 3%; border-radius: 30px; margin-right: 30px; float: left" src="${d.user.avatar}" />
+////
+////                    <span style="display: block; font-size: 17px"><b>${d.user.username}</b></span>
+////                    <span style="font-size: 15px">${d.noiDung}</span>
+////                    <em style="font-size: 13px; margin-left:10px">. ${moment(d.ngayPhanHoi).locale("vi").fromNow()}</em>
+////                </li>
+////            `
+//        h+= `<span>
+//                    ${d.tongGia}
+//                </span>`
+//        }
+//        
+//        let c = document.getElementById("thanhToanTrucTiep");
+//        c.innerHTML = h;
+//    });
+//}

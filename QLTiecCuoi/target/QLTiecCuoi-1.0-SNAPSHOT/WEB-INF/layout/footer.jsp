@@ -8,4 +8,6 @@
 <div class="mt-4 p-5 bg-light text-dark rounded">
     <h1>Nhà Hàng Tiệc Cưới Marry Me</h1>
     <p>Cung cấp cho khách hàng các dịch vụ tốt nhất.</p>
+    <p>Lê Thị Hồng Đào.</p>
+    <p>Võ Thị Thu Minh.</p>
 </div>

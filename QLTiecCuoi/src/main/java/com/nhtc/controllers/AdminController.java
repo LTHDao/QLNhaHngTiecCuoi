@@ -5,11 +5,9 @@
 package com.nhtc.controllers;
 
 import com.nhtc.pojo.Dichvu;
-
 import com.nhtc.pojo.Sanhcuoi;
 import com.nhtc.pojo.User;
 import com.nhtc.service.DichVuService;
-
 import com.nhtc.service.SanhCuoiService;
 import com.nhtc.service.ThongKeService;
 import com.nhtc.service.UserService;
@@ -26,11 +24,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -40,20 +36,19 @@ import org.springframework.web.servlet.ModelAndView;
 //@ControllerAdvice
 @RequestMapping("/admin")
 public class AdminController {
-    
+
     @Autowired
     private DichVuService dichVuService;
-    
+
     @Autowired
     private ThongKeService thongKeService;
-    
+
     @Autowired
     private SanhCuoiService sanhCuoiService;
-    
+
     @Autowired
     private UserService userService;
-    
-    
+
     @GetMapping("/qldichvu")
     public String list(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("dichvu", new Dichvu());
@@ -73,14 +68,6 @@ public class AdminController {
         return "dichvu";
     }
     
-//    @PostMapping("/qldichvu/{idDichVu}")
-//    public String update(Model model, @PathVariable(value = "baivietId") int idDichVu){
-//        Dichvu dichvu = this.dichVuService.getDichVuById(idDichVu);
-//        model.addAttribute("dichvu", dichvu);
-//        return "baiviet_update";
-//    }
-    
-    
     @RequestMapping("/qldichvu")
     public String timKiem(Model model,
             @RequestParam Map<String, String> params) {
@@ -90,13 +77,13 @@ public class AdminController {
         return "qldichvu";
         
     }
-    
+
     @GetMapping("/nhanvien")
     public String listNhanVien(Model model) {
-       model.addAttribute("nhanvien", new User());
+        model.addAttribute("nhanvien", new User());
         return "nhanvien";
     }
-    
+
     @PostMapping("/nhanvien")
     public String addNhanVien(Model model, @ModelAttribute(value = "nhanvien") @Valid User nhanvien,
             BindingResult result) {
@@ -113,26 +100,28 @@ public class AdminController {
         model.addAttribute("errMsg", errMsg);
         return "nhanvien";
     }
-    
+
     @GetMapping("/qlsanhcuoi")
     public String listSanhCuoi(Model model) {
-       model.addAttribute("sanhCuoi", new Sanhcuoi());
+        System.out.println("hongdaone");
+        model.addAttribute("sanhCuoi", new Sanhcuoi());
         return "qlsanhcuoi";
     }
-    
+
     @PostMapping("/qlsanhcuoi")
     public String addSanh(Model model, @ModelAttribute(value = "sanhCuoi") @Valid Sanhcuoi sanhCuoi,
             BindingResult result) {
         if (!result.hasErrors()) {
-            if(this.sanhCuoiService.addSanhCuoi(sanhCuoi) == true)
-                return "redirect:/";
-            else
+            if (this.sanhCuoiService.addOrUpdateSanhCuoi(sanhCuoi) == true) {
+                return "redirect:/admin/qlsanhcuoi";
+            } else {
                 model.addAttribute("errMsg", "Wrong!!!");
+            }
         }
-        
-        return "sanhcuoi";
+
+        return "qlsanhcuoi";
     }
-    
+
     @GetMapping("/thongKeMatDo")
     public String thongKeMatDo(Model model, @RequestParam(required = false) java.util.Map<String, String> params) {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
@@ -168,13 +157,15 @@ public class AdminController {
         Date fromDate = null, toDate = null;;
         try {
             String from = params.getOrDefault("fromDate", null);
-            if (from != null)
+            if (from != null) {
                 fromDate = f.parse(from);
+            }
 
             String to = params.getOrDefault("toDate", null);
-            if (to != null) 
+            if (to != null) {
                 toDate = f.parse(to);
-            
+            }
+
         } catch (ParseException ex) {
             ex.printStackTrace();
         }

@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Minh
+ * @author hdao2
  */
 @Entity
 @Table(name = "dichvu")
@@ -41,10 +41,6 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Dichvu.findByGiaDichVu", query = "SELECT d FROM Dichvu d WHERE d.giaDichVu = :giaDichVu"),
     @NamedQuery(name = "Dichvu.findByHinhAnh", query = "SELECT d FROM Dichvu d WHERE d.hinhAnh = :hinhAnh")})
 public class Dichvu implements Serializable {
-
-    @OneToMany(mappedBy = "idDichVuChinh")
-    @JsonIgnore
-    private Set<DichVuStore> dichVuStoreSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -71,7 +67,10 @@ public class Dichvu implements Serializable {
     @ManyToOne(optional = false)
     @JsonIgnore
     private Loaidichvu loaiDichVu;
-    
+    @OneToMany(mappedBy = "idDichVuChinh")
+    @JsonIgnore
+    private Set<DichVuStore> dichVuStoreSet;
+
     @Transient
     private MultipartFile file;
 
@@ -136,6 +135,15 @@ public class Dichvu implements Serializable {
         this.loaiDichVu = loaiDichVu;
     }
 
+    @XmlTransient
+    public Set<DichVuStore> getDichVuStoreSet() {
+        return dichVuStoreSet;
+    }
+
+    public void setDichVuStoreSet(Set<DichVuStore> dichVuStoreSet) {
+        this.dichVuStoreSet = dichVuStoreSet;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -160,7 +168,7 @@ public class Dichvu implements Serializable {
     public String toString() {
         return "com.nhtc.pojo.Dichvu[ idDichVu=" + idDichVu + " ]";
     }
-
+    
     /**
      * @return the file
      */
@@ -175,13 +183,4 @@ public class Dichvu implements Serializable {
         this.file = file;
     }
 
-    @XmlTransient
-    public Set<DichVuStore> getDichVuStoreSet() {
-        return dichVuStoreSet;
-    }
-
-    public void setDichVuStoreSet(Set<DichVuStore> dichVuStoreSet) {
-        this.dichVuStoreSet = dichVuStoreSet;
-    }
-    
 }

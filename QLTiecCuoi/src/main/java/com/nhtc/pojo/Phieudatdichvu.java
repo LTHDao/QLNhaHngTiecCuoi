@@ -41,9 +41,9 @@ public class Phieudatdichvu implements Serializable {
     @Size(max = 100)
     @Column(name = "ghiChu")
     private String ghiChu;
-    @JoinColumn(name = "idDichVu", referencedColumnName = "idDichVu")
+    @JoinColumn(name = "idDichVu", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Dichvu idDichVu;
+    private DichVuStore idDichVu;
     @JoinColumn(name = "idTiecCuoi", referencedColumnName = "idDonDatTiec")
     @ManyToOne(optional = false)
     private Dondattiec idTiecCuoi;
@@ -71,11 +71,11 @@ public class Phieudatdichvu implements Serializable {
         this.ghiChu = ghiChu;
     }
 
-    public Dichvu getIdDichVu() {
+    public DichVuStore getIdDichVu() {
         return idDichVu;
     }
 
-    public void setIdDichVu(Dichvu idDichVu) {
+    public void setIdDichVu(DichVuStore idDichVu) {
         this.idDichVu = idDichVu;
     }
 

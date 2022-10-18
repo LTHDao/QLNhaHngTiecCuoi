@@ -41,7 +41,10 @@ public class ApiDichVuController {
     @DeleteMapping("/qldichvu/{idDichVu}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "idDichVu") int id) {
-        this.dichVuService.deleteDichVu(id);
+        boolean updateStore = this.dichVuService.updateDichVuStore(id);
+        if (updateStore == true)
+            this.dichVuService.deleteDichVu(id);
+        
     }
 
     @PutMapping("/qldichvu/updateDichVu")

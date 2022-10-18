@@ -5,14 +5,15 @@
 package com.nhtc.repository.impl;
 
 import com.nhtc.pojo.Catochuc;
-import com.nhtc.pojo.Dichvu;
+import com.nhtc.pojo.DichVuStore;
 import com.nhtc.pojo.Dondattiec;
 import com.nhtc.pojo.Hoadon;
 import com.nhtc.pojo.Khachhang;
 import com.nhtc.pojo.Monan;
 import com.nhtc.pojo.Phieudatdichvu;
 import com.nhtc.pojo.Phieudatmon;
-import com.nhtc.pojo.Sanhcuoi;
+import com.nhtc.pojo.SanhCuoiStore;
+import com.nhtc.pojo.User;
 import com.nhtc.repository.DatTiecRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +95,7 @@ public class DatTiecRepositoryImpl implements DatTiecRepository {
     }
 
     @Override
-    public Phieudatdichvu addPhieuDv(Dondattiec idDon, Dichvu dichVu) {
+    public Phieudatdichvu addPhieuDv(Dondattiec idDon, DichVuStore dichVu) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
 
         try {
@@ -131,8 +135,8 @@ public class DatTiecRepositoryImpl implements DatTiecRepository {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Dondattiec addDonDatTiec(Map<String, String> params, Sanhcuoi sanh,
-            Date ngayToChuc) {
+    public Dondattiec addDonDatTiec(Map<String, String> params, SanhCuoiStore sanh,
+            Date ngayToChuc, Date ngayDatHen) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
 
         try {
@@ -174,6 +178,7 @@ public class DatTiecRepositoryImpl implements DatTiecRepository {
             d.setIdSanh(sanh);
             d.setIdCaToChuc(this.getCaById(idCaToChuc));
             d.setNgayToChuc(ngayToChuc);
+            d.setNgayDatHen(ngayDatHen);
             d.setChitTiet(params.get("chitTiet"));
             d.setSoBan(soBan);
 
@@ -217,6 +222,44 @@ public class DatTiecRepositoryImpl implements DatTiecRepository {
         Session s = sessionFactory.getObject().getCurrentSession();
 
         return s.get(Dondattiec.class, id);
+    }
+
+    @Override
+    public Khachhang getKhachHangById(int id) {
+        Session s = sessionFactory.getObject().getCurrentSession();
+
+        return s.get(Khachhang.class, id);
+    }
+
+    @Override
+    public Hoadon getHoaDonById(int id) {
+        Session s = sessionFactory.getObject().getCurrentSession();
+
+        return s.get(Hoadon.class, id);
+    }
+
+    @Override
+    public List<Phieudatmon> getPhieuDatMonByIdTiec(Dondattiec idDon) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Phieudatmon> query = builder.createQuery(Phieudatmon.class);
+        Root root = query.from(Phieudatmon.class);
+        query = query.select(root);
+        query = query.where(builder.equal(root.get("idTiecCuoi").get("idDonDatTiec"), idDon.getIdDonDatTiec()));
+        Query q = session.createQuery(query);
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Phieudatdichvu> getPhieuDatDichVuByIdTiec(Dondattiec idDon) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Phieudatdichvu> query = builder.createQuery(Phieudatdichvu.class);
+        Root root = query.from(Phieudatdichvu.class);
+        query = query.select(root);
+        query = query.where(builder.equal(root.get("idTiecCuoi").get("idDonDatTiec"), idDon.getIdDonDatTiec()));
+        Query q = session.createQuery(query);
+        return q.getResultList();
     }
 
 }

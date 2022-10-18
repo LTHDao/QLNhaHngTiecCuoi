@@ -69,7 +69,7 @@ com\nhtc\pojo\Loaimon.class
 com\nhtc\configs\SecurityWebApplicationInitializer.class
 com\nhtc\repository\DatTiecRepository.class
 com\nhtc\repository\UserRepository.class
-com\nhtc\handlers\LoginSuccessHandler.class
+com\nhtc\handlers\LoginHandler.class
 com\nhtc\repository\impl\PhanHoiRepositoryImpl.class
 com\nhtc\service\ThongKeService.class
 com\nhtc\pojo\Phieudatdichvu_.class

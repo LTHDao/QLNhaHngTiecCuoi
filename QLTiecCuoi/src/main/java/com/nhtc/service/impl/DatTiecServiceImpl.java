@@ -5,6 +5,7 @@
 package com.nhtc.service.impl;
 
 import com.nhtc.pojo.Catochuc;
+import com.nhtc.pojo.DichVuStore;
 import com.nhtc.pojo.Dichvu;
 import com.nhtc.pojo.Dondattiec;
 import com.nhtc.pojo.Hoadon;
@@ -12,6 +13,7 @@ import com.nhtc.pojo.Khachhang;
 import com.nhtc.pojo.Monan;
 import com.nhtc.pojo.Phieudatdichvu;
 import com.nhtc.pojo.Phieudatmon;
+import com.nhtc.pojo.SanhCuoiStore;
 import com.nhtc.pojo.Sanhcuoi;
 import com.nhtc.repository.DatTiecRepository;
 import com.nhtc.service.DatTiecService;
@@ -52,12 +54,12 @@ public class DatTiecServiceImpl implements DatTiecService {
     }
 
     @Override
-    public Dondattiec addDonDatTiec(Map<String, String> params, Sanhcuoi sanh, Date ngayToChuc) {
-        return this.datTiecRepository.addDonDatTiec(params, sanh, ngayToChuc);
+    public Dondattiec addDonDatTiec(Map<String, String> params, SanhCuoiStore sanh, Date ngayToChuc, Date ngayDatHen) {
+        return this.datTiecRepository.addDonDatTiec(params, sanh, ngayToChuc, ngayDatHen);
     }
 
     @Override
-    public Phieudatdichvu addPhieuDv(Dondattiec idDon, Dichvu dichVu) {
+    public Phieudatdichvu addPhieuDv(Dondattiec idDon, DichVuStore dichVu) {
         return this.datTiecRepository.addPhieuDv(idDon, dichVu);
     }
 
@@ -79,6 +81,26 @@ public class DatTiecServiceImpl implements DatTiecService {
     @Override
     public Dondattiec getDonDatTiecById(int id) {
         return this.datTiecRepository.getDonDatTiecById(id);
+    }
+
+    @Override
+    public Khachhang getKhachHangById(int id) {
+        return this.datTiecRepository.getKhachHangById(id);
+    }
+
+    @Override
+    public Hoadon getHoaDonById(int id) {
+        return this.datTiecRepository.getHoaDonById(id);
+    }
+
+    @Override
+    public List<Phieudatmon> getPhieuDatMonByIdTiec(Dondattiec idDon) {
+        return this.datTiecRepository.getPhieuDatMonByIdTiec(idDon);
+    }
+
+    @Override
+    public List<Phieudatdichvu> getPhieuDatDichVuByIdTiec(Dondattiec idDon) {
+        return this.datTiecRepository.getPhieuDatDichVuByIdTiec(idDon);
     }
 
 }
