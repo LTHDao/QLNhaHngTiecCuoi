@@ -70,7 +70,7 @@
             &#9776;
         </button>
 
-        <a class="navbar-brand text-warning" href="<c:url value="/" />" style="margin-left: 200px; font-size: 24px">
+        <a class="navbar-brand text-warning" href="<c:url value="/" />" style="margin-left: 20%; font-size: 24px">
             <b>Nhà hàng tiệc cưới MARRY ME</b>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -95,7 +95,7 @@
             <sec:authorize access="isAuthenticated()">
                 <li class="nav-item active" style="margin-right: 15px; margin-left: 15px" >
                     <a class="btn text-dark btn-outline-secondary w3-hover-text-white" href="<c:url value="/"/>">
-                        <img style="width: 25px" src="${pageContext.session.getAttribute("currentUser").avatar}" class="rounded" />
+                        <img style="width: 25px; border-radius: 30px" src="${pageContext.session.getAttribute("currentUser").avatar}"/>
                         ${pageContext.session.getAttribute("currentUser").hoTen}
                     </a>
                 </li>

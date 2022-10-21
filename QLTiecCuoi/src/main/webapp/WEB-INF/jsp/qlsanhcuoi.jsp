@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<h1 class="text-center text-danger">Quan Ly Sanh Cuoi</h1>
+<h1 class="text-center text-danger">QUẢN LÝ SẢNH CƯỚI</h1>
 
 <c:url value="/admin/qlsanhcuoi" var="action"/>
 
@@ -23,32 +23,32 @@
     <form:form method="post" action="${action}" modelAttribute="sanhCuoi" enctype="multipart/form-data">
             <form:errors path="*" cssClass="alert alert-danger" element="div"/>
         <div class="form-group">
-            <label for="tenSanh">Ten Sanh</label>
+            <label for="tenSanh">Tên sảnh</label>
             <form:input type="text" id="tenSanh" path="tenSanh" cssClass="form-control"/>
             <form:errors path="tenSanh" cssClass="alert alert-danger" element="div"/>
         </div>
         <div class="form-group">
-            <label for="giaToiThieu">Gia Toi Thieu</label>
+            <label for="giaToiThieu">Giá tối thiểu</label>
             <form:input type="number" id="giaToiThieu" path="giaToiThieu" cssClass="form-control"/>
             <form:errors path="giaToiThieu" cssClass="alert alert-danger" element="div"/>
         </div>
         <div class="form-group">
-            <label for="moTa">Mo Ta</label>
+            <label for="moTa">Mô tả</label>
             <form:textarea type="text" id="moTa" path="moTa" cssClass="form-control"/>
             <form:errors path="moTa" cssClass="alert alert-danger" element="div"/>
         </div>
         <div class="form-group">
-            <label for="dienTich">Dien Tich</label>
+            <label for="dienTich">Diện tích</label>
             <form:input type="number" id="dienTich" path="dienTich" cssClass="form-control"/>
             <form:errors path="dienTich" cssClass="alert alert-danger" element="div"/>
         </div>
         <div class="form-group">
-            <label for="soLuongBan">So Luong Ban</label>
+            <label for="soLuongBan">Số luợng bàn</label>
             <form:input type="number" id="soLuongBan" path="soLuongBan" cssClass="form-control"/>
             <form:errors path="soLuongBan" cssClass="alert alert-danger" element="div"/>
         </div>
         <div class="form-group">
-            <label>Anh</label>
+            <label>Ảnh</label>
             <form:input type="file" id="file" path="file" cssClass="form-control"/>
         </div>
         <div class="form-group">
@@ -57,19 +57,19 @@
             <form:errors path="idSanhCuoi" cssClass="alert alert-danger" element="div"/>
         </div>
         <div class="form-group">
-            <input type="submit" value="Them" class="btn btn-danger"/>
+            <input type="submit" value="Thêm" class="btn btn-danger"/>
         </div>
         
     </form:form>
     
     <table class="table">
         <tr>
-            <th>Ten Sanh</th>
-            <th>Gia Toi Thieu</th>
-            <th>Mo Ta</th>
-            <th>Dien Tich</th>
-            <th>So Luong Ban</th>
-            <th>Hinh Anh</th>
+            <th>Tên sảnh</th>
+            <th>Giá tối thiểu</th>
+            <th>Mô tả</th>
+            <th>Diện tích</th>
+            <th>Số lượng bàn</th>
+            <th>Hình ảnh</th>
         </tr>
         <tbody id="adminSanhCuoi">
 
@@ -82,7 +82,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Cap Nhat Nhan Vien</h4>
+                    <h4 class="modal-title">CẬP NHẬT SẢNH CƯỚI</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -115,7 +115,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button id="updateNV" class="btn btn-primary">
-                        Edit
+                        Sửa
                     </button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>

@@ -43,12 +43,13 @@ function addPhanHoi(endpoint) {
         let h = `
                 <li class="list-group-item list-group-item-action">
                     <img style="width: 3%; border-radius: 30px; margin-right: 30px; float: left" src="${data.user.avatar}" />
-                    <span style="display: block"><b>${data.user.username}</b></span>
+                    <span style="display: block"><b>${data.user.hoTen}</b></span>
                     <span">${data.noiDung}</span>
                     <em style="font-size: 13px; margin-left:10px">. ${moment(data.ngayPhanHoi).locale("vi").fromNow()}</em>
                 </li>
             `
         d.insertAdjacentHTML("beforebegin", h);
+        document.getElementById("comment").value = '';
         console.info(data);
     }).catch(function (err) {
         console.error(err);

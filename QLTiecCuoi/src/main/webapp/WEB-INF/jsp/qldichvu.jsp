@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<h1 class="text-center text-danger">Quan Ly Dich Vu</h1>
+<h1 class="text-center text-danger">QUẢN LÝ DỊCH VỤ</h1>
 
 <c:url value="/admin/qldichvu" var="action"/>
 
@@ -22,26 +22,26 @@
     <form:form method="post" action="${action}" modelAttribute="dichvu" enctype="multipart/form-data">
         <form:errors path="*" cssClass="alert alert-danger" element="div"/>
         <div class="form-group">
-            <label>Ten Dich Vu</label>
+            <label>Tên dịch vụ</label>
             <form:input type="text" id="tenDichVu" path="tenDichVu" cssClass="form-control" required="true"/>
             <form:errors path="tenDichVu" cssClass="alert alert-danger" element="div"/>
         </div>
         <div class="form-group">
-            <label>Chi Tiet Dich Vu</label>
+            <label>Chi tiết dịch vụ</label>
             <form:textarea type="text" id="chiTiet" path="chiTiet" cssClass="form-control"></form:textarea>
 
             </div>
             <div class="form-group">
-                <label>Gia Dich Vu</label>
+                <label>Giá dịch vụ</label>
             <form:input type="text" id="giaDichVu" path="giaDichVu" cssClass="form-control" required="true"/>
             <form:errors path="giaDichVu" cssClass="alert alert-danger" element="div"/>
         </div>
         <div class="form-group">
-            <label>Anh Dich Vu</label>
+            <label>Ảnh dịch vụ</label>
             <form:input type="file" id="file" path="file" cssClass="form-control" required="true"/>
         </div>
         <div class="form-group">
-            <label>Loai Dich Vu</label>
+            <label>Loại dịch vụ</label>
             <form:select id="loaidichVu" path="loaiDichVu" cssClass="form-select">
                 <c:forEach items="${loaidichvu}" var="loai">
                     <option value="${loai.idloaidichvu}">${loai.tenLoaiDichVu}</option>
@@ -50,12 +50,12 @@
             <form:errors path="loaiDichVu" cssClass="alert alert-danger" element="div"/>
         </div>
         <div class="form-group">
-            <input type="Submit" value="Them" class="btn btn-danger"/>
+            <input type="Submit" value="Thêm" class="btn btn-danger"/>
         </div>
     </form:form>
 
     <c:url value="/admin/qldichvu" var="action" />
-    <form method="get" action="${action}">
+    <form method="get" action="${action}" style="display: none">
         <div class="row">
             <div class="clo-md-10">
                 <input class="form-control" type="text" name="kw" placeholder="Nhap tu khoa..."/>
@@ -77,13 +77,13 @@
         </tbody>
     </table>
 
-        <div class="modal" id="myModalUpdateDichVu">
+        <div class="modal" id="myModalUpdateDichVu" style="margin-top: 100px">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Cap Nhat Dich Vu</h4>
+                        <h4 class="modal-title">Cập Nhật Dịch Vụ</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -91,15 +91,15 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="form-group">
-                                <label>Ten Dich Vu</label>
+                                <label>Tên dịch vụ</label>
                                 <input type="text" id="tenDichVu1" path="tenDichVu" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>Cho Tiet Dich Vu</label>
+                                <label>Chi tiết dịch vụ</label>
                                 <input type="text" id="chiTiet1" path="chiTiet" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>Gia Dich Vu</label>
+                                <label>Giá dịch vụ</label>
                                 <input type="text" id="giaDichVu1" path="giaDichVu" class="form-control"/>
                             </div>
 <!--                            <div class="form-group">
@@ -113,7 +113,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button id="updateDV" class="btn btn-primary">
-                            Edit
+                            Sửa
                         </button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                     </div>

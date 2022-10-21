@@ -13,7 +13,7 @@
     <div class="form-group">
         <textarea maxlength="300" minlength="1" class="form-control" id="comment" placeholder="Noi dung comment"></textarea>
     </div>
-    <input type="button" onclick="addPhanHoi('${endpoint}')" value="Binh luan" class="btn btn-danger" />
+    <input type="button" onclick="addPhanHoi('${endpoint}')" value="Bình luận" class="btn btn-danger" />
 
     <ul class="list-group list-group-flush" id="dsPhanHoi">
     </ul>

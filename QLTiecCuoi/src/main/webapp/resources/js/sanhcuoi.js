@@ -23,7 +23,7 @@ function loadAdminSanhCuoi(endpoint) {
                 <td>${data[i].soLuongBan}</td>
                 <td><img src="${data[i].hinhAnh}" width="120" /></td>
                 <td>
-                    <button style="width:60px; margin:2px" class="btn btn-danger" onclick="loadUpdateSanhCuoi('${endpoint + "/" + data[i].idSanhCuoi}', ${data[i].idSanhCuoi})" data-bs-toggle="modal" data-bs-target="#myModalUpdateNhanVien">Sửa</button>
+                    <button style="width:60px; margin:2px" class="btn btn-primary" onclick="loadUpdateSanhCuoi('${endpoint + "/" + data[i].idSanhCuoi}', ${data[i].idSanhCuoi})" data-bs-toggle="modal" data-bs-target="#myModalUpdateNhanVien">Sửa</button>
                     <button style="width:60px; margin:2px" class="btn btn-danger" onclick="deleteSanhcuoi('${endpoint + "/" + data[i].idSanhCuoi}', ${data[i].idSanhCuoi}, this)" >Xóa</button>
                 </td>
             </tr>
@@ -58,10 +58,6 @@ function deleteSanhcuoi(endpoint, id, btn) {
     fetch(endpoint, {
         method: 'delete'
     }).then(function (res) {
-        if (res.status !== 204)
-            alert("Something wrong!!!");
-        else 
-            alert("Xóa thành công!");
         r.style.display = "none";
     }).catch(function (err) {
         console.error(err);

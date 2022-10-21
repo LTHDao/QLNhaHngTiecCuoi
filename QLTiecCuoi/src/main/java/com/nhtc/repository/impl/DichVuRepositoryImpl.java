@@ -114,9 +114,18 @@ public class DichVuRepositoryImpl implements DichVuRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
             session.save(dichvu);
+            DichVuStore dvs = new DichVuStore();
+            dvs.setTenDichVu(dichvu.getTenDichVu());
+            dvs.setChiTiet(dichvu.getChiTiet());
+            dvs.setGiaDichVu(dichvu.getGiaDichVu());
+            dvs.setHinhAnh(dichvu.getHinhAnh());
+            dvs.setIdDichVuChinh(dichvu);
+            dvs.setLoaiDichVu(dichvu.getLoaiDichVu().getIdloaidichvu());
+            session.save(dvs);
+
+            System.err.println("Them Thanh cong!!");
             return true;
         } catch (Exception ex) {
-            System.err.println("===+THEM DICH VU+===" + ex.getMessage());
             ex.printStackTrace();
         }
         return false;

@@ -119,7 +119,7 @@
     <div style="margin-top: 20px" class="alert alert-warning">
         Đây chỉ là đặt tiệc dự kiến, bạn có thể thay đổi thông tin và dịch vụ đã đặt trong ngày gặp mặt trực tiếp tại nhà hàng của chúng tôi.
     </div>
-    <input id="btnDatTiec" style="margin-top: 20px" type="submit" value="Tiếp" class="btn btn-danger btn-lg" onclick="addDonDatTiec()" />
+    <input id="btnDatTiec" style="margin-top: 20px" type="submit" value="Đặt tiệc" class="btn btn-danger btn-lg" onclick="addDonDatTiec()" />
     <div id="spinnerDatTiec" style="margin-top: 20px; display: none" class="spinner-border text-warning"></div>
 </div>
 

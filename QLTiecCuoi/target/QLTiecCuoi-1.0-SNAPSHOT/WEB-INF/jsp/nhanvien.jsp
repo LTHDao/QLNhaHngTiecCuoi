@@ -9,7 +9,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
-<h1 class="text-center text-danger">QUAN LY NHAN VIEN</h1>
+<h1 class="text-center text-danger">QUẢN LÝ NHÂN VIÊN</h1>
 
 <c:if test="${errMsg != null}">
     <div class="alert alert-danger">
@@ -23,29 +23,29 @@
     <form:form method="post" action="${action}" enctype="multipart/form-data" modelAttribute="nhanvien">
 
         <div class="form-group" >
-            <label>THONG TIN</label>
+            <label>THÔNG TIN</label>
         </div>
         <div class="form-group">
-            <label>Ho Ten</label>
+            <label>Họ tên</label>
             <form:input type="text" id="hoTen" path="hoTen" class="form-control"/>
         </div>
         <div class="form-group">
-            <label>Ngay Sinh</label>
+            <label>Ngày sinh</label>
             <form:input type="date" id="ngaySinh" path="ngaySinh" class="form-control"/>
         </div>
         <div class="form-group">
-            <label>Gioi Tinh</label>
+            <label>Giới tính</label>
             <form:select class="form-select" aria-label=".form-select-lg example" id="gioiTinh" path="gioiTinh">
                 <option selected value="Nam">Nam</option>
-                <option value="Nu">Nu</option>
+                <option value="Nu">Nữ</option>
             </form:select>
         </div>
         <div class="form-group">
-            <label>Dia Chi</label>
+            <label>Địa chỉ</label>
             <form:input type="text" id="diaChi" path="diaChi" class="form-control"/>
         </div>
         <div class="form-group">
-            <label>So Dien Thoai</label>
+            <label>Số điện thoại</label>
             <form:input type="text" id="sdt" path="sdt" class="form-control"/>
         </div>
 
@@ -59,7 +59,7 @@
         </div>
 
         <div class="form-group">
-            <label>TAI KHOAN</label>
+            <label>TÀI KHOẢN</label>
         </div>
         <div class="form-group">
             <label>Username</label>
@@ -78,17 +78,17 @@
 
 
         <div class="form-group">
-            <label>Phan Quyen</label>
+            <label>Phân quyền</label>
             <form:select class="form-select" aria-label=".form-select-lg example" id="userRole" path="userRole">
-                <option selected value="ROLE_EMPLOYEE">Nhan Vien</option>
-                <option value="ROLE_USER">Khach Hang</option>
+                <option selected value="ROLE_EMPLOYEE">Nhân viên</option>
+                <option value="ROLE_USER">Khách hàng</option>
                 <option value="ROLE_ADMIN">Admin</option>
 
             </form:select>
         </div>
 
         <div class="form-group">
-            <input type="Submit" value="Them" class="btn btn-danger"/>
+            <input type="Submit" value="Thêm" class="btn btn-danger"/>
         </div>
 
     </form:form>
@@ -96,13 +96,13 @@
 
     <table class="table">
         <tr>
-            <th>Ho Ten</th>
-            <th>Ngay Sinh</th>
-            <th>Gioi Tinh</th>
-            <th>Dia Chi</th>  
-            <th>So Dien Thoai</th>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Địa chỉ</th>  
+            <th>Số điện thoại</th>
             <th>Email</th>
-            <th>Phan Quyen</th>
+            <th>Phân quyền</th>
 
         </tr>
 
@@ -111,13 +111,13 @@
         </tbody>
     </table>
 
-    <div class="modal" id="myModalUpdateNhanVien">
+    <div class="modal" id="myModalUpdateNhanVien" style="margin-top: 50px">
         <div class="modal-dialog">
             <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Cap Nhat Nhan Vien</h4>
+                    <h4 class="modal-title">Cập nhật nhân viên</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -125,25 +125,25 @@
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="form-group">
-                            <label>Ho Ten</label>
+                            <label>Họ tên</label>
                             <input type="text" id="hoTen1" path="hoTen" class="form-control"/>
                         </div>
                         <div class="form-group">
-                            <label>Ngay Sinh</label>
+                            <label>Ngày sinh</label>
                             <input type="date" id="ngaySinh1" path="ngaySinh" class="form-control"/>
                         </div>
                         <div class="form-check form-check-inline">
                             <select class="form-select" aria-label=".form-select-lg example" id="userRole" path="userRole">
                                 <option selected value="Nam">Nam</option>
-                                <option value="Nu">Nu</option>
+                                <option value="Nu">Nữ</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Dia Chi</label>
+                            <label>Địa chỉ</label>
                             <input type="text" id="diaChi1" path="diaChi" class="form-control"/>
                         </div>
                         <div class="form-group">
-                            <label>So Dien Thoai</label>
+                            <label>Số điện thoại</label>
                             <input type="text" id="sdt1" path="sdt" class="form-control"/>
                         </div>
 
@@ -152,10 +152,10 @@
                             <input type="text" id="email1" path="email" class="form-control"/>
                         </div>
                         <div class="form-group">
-                            <label>Phan Quyen</label>
+                            <label>Phân quyền</label>
                             <select class="form-select" aria-label=".form-select-lg example" id="userRole" path="userRole">
-                                <option selected value="ROLE_EMPLOYEE">Nhan Vien</option>
-                                <option value="ROLE_USER">Khach Hang</option>
+                                <option selected value="ROLE_EMPLOYEE">Nhân viên</option>
+                                <option value="ROLE_USER">Khách hàng</option>
                                 <option value="ROLE_ADMIN">Admin</option>
                             </select>
                         </div>
@@ -165,7 +165,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button id="updateNV" class="btn btn-primary">
-                        Edit
+                        Sửa
                     </button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>

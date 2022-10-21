@@ -8,7 +8,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<h1 class="text-center text-danger">DANG KY</h1>
+<h1 class="text-center text-danger">ĐĂNG KÝ</h1>
 
 <c:if test="${errMsg != null}">
     <div class="alert alert-danger">
@@ -22,7 +22,7 @@
     <form:form method="post" action="${action}" enctype="multipart/form-data" modelAttribute="user">
 
         <div class="form-group">
-            <label>Ho Ten</label>
+            <label>Họ tên</label>
             <form:input type="text" id="hoTen" path="hoTen" class="form-control"/>
         </div>
 
@@ -42,7 +42,7 @@
         </div>
 
         <div class="form-group">
-            <label>So Dien Thoai</label>
+            <label>Số điện thoại</label>
             <form:input type="text" id="sdt" path="sdt" class="form-control"/>
         </div>
 
@@ -58,7 +58,7 @@
         </div>
 
         <div class="form-group">
-            <input type="Submit" value="Dang Ky" class="btn btn-danger"/>
+            <input type="Submit" value="Đăng ký" class="btn btn-danger"/>
         </div>
 
     </form:form>

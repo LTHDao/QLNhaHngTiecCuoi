@@ -36,9 +36,9 @@
     <img style="width: 36%; margin-right: 12%; height: 290px; position: relative; bottom: 20px" src="https://res.cloudinary.com/btlde1/image/upload/v1660830282/QLNhaHangTiecCuoi/tieccuoi3_qrl7t1.jpg" />
 </div>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"
-        style="bottom: 100px; position: fixed; right: 20px; width: 50px; height: 50px; border-radius: 30px"
-        onclick="openBoxChat()">
+<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal"
+        style="bottom: 100px; position: fixed; right: 20px; width: 50px; height: 50px; border-radius: 30px; padding: 5px; font-weight: bold"
+        onclick="openBoxChat()"> Chat
 </button>
 
 <!-- The Modal -->
@@ -126,6 +126,7 @@
                 userRole: '${current.userRole}'
             });
         }
+        document.getElementById("comment").value = '';
     })
 
 

@@ -7,20 +7,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<h1 class="text-center text-danger">DANG NHAP</h1>
+<h1 class="text-center text-danger">ĐĂNG NHẬP</h1>
 
 
 <c:url value="/login" var="action"/>
 
     <c:if test="${param.error !=null}">
         <div class="alert alert-danger">
-            Da có loi xay ra, vui long quay lai sau!
+            Đã có lỗi xảy ra, vui lòng thử lại sau!
         </div>  
     </c:if>
 
     <c:if test="${param.accessDenied != null}">
         <div class="alert alert-danger">
-            Ban khong có quyen truy cap!!!
+            Bạn không có quyền truy cập!!!
         </div>  
     </c:if>
     <div class ="container">  
