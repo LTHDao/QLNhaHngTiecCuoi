@@ -102,7 +102,7 @@ function loadAdminNhanvien(endpoint) {
                 <td>
                     <div class="spinner-border text-info" style="display:none" id="load${data[i].id}"></div>
                     <button class="btn btn-primary" onclick="loadUpdateNhanVien('${endpoint + "/" + data[i].id}', ${data[i].id})" data-bs-toggle="modal" data-bs-target="#myModalUpdateNhanVien">
-                               Edit
+                               Sửa
                             </button>
                     <button class="btn btn-danger" onclick="deleteUser('${endpoint + "/" + data[i].id}', ${data[i].id})">Xóa</button>
                 </td>
